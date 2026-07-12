@@ -1,0 +1,43 @@
+﻿{
+  "name": "Hotel City Park — Solapur",
+  "short_name": "City Park",
+  "description": "Hotel City Park, Solapur — Premium stay, dining & events. 1km from Railway Station.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d1b2a",
+  "theme_color": "#c9a96e",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book a Room",
+      "url": "./booking.html",
+      "description": "Make a room or event reservation"
+    },
+    {
+      "name": "Contact Us",
+      "url": "./contact.html",
+      "description": "Get in touch with us"
+    },
+    {
+      "name": "View Rooms",
+      "url": "./rooms.html",
+      "description": "Browse all rooms and suites"
+    }
+  ]
+}

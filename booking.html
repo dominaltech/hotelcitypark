@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservations — Hotel City Park, Solapur</title>
+<meta name="description" content="Book your room stay, corporate meetings, and banquet celebrations at Hotel City Park, Solapur. Check availability online.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#9B3A6A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="City Park">
+<link rel="apple-touch-icon" href="logo.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const _supabase = supabase.createClient(
+    'https://szjwhimdvugqdlotxmwe.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6andoaW1kdnVncWRsb3R4bXdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDQwODUsImV4cCI6MjA5ODgyMDA4NX0.mxrtIFySdhHlzTZGdoA5PNIznQSJCKY6ojCyWmzoIno'
+  );
+</script>
+<script>
+  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      const hour = new Date().getHours();
+      const isNight = hour >= 19 || hour < 5;
+      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    }
+  })();
+</script>
+</head>
+<body style="min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px 20px;">
+
+<div class="booking-container">
+  <div class="form-panel">
+    <!-- TOP HEADER BAR -->
+    <div class="form-panel-header">
+      <a href="index.html" class="btn-back" id="backHomeBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </a>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin-right: 0; width: 32px; height: 32px;">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none; width: 14px; height: 14px;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <div class="logo-text">City Park</div>
+      </div>
+    </div>
+
+    <!-- MAIN FORM HEADER -->
+    <div class="form-header">
+      <h2>Room & Event <em>Reservations</em></h2>
+      <p>Please enter details to check availability</p>
+    </div>
+
+    <div class="type-selector">
+      <button class="type-btn active" id="btnRooms" onclick="setBookingType('rooms')">Rooms & Suites</button>
+      <button class="type-btn" id="btnEvents" onclick="setBookingType('events')">Conference & Events</button>
+    </div>
+
+    <form class="booking-form" id="bookingForm" onsubmit="handleBookingSubmit(event)">
+      <!-- Personal Details -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" required placeholder="Enter first name">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" required placeholder="Enter last name">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emailAddr">Email Address *</label>
+          <input type="email" id="emailAddr" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label for="phoneNum">Phone Number *</label>
+          <input type="tel" id="phoneNum" required placeholder="e.g. +91 98765 43210">
+        </div>
+      </div>
+
+      <!-- ROOMS FIELDS -->
+      <div id="roomsFields">
+        <div class="form-row" id="checkinRow" style="margin-bottom: 20px;">
+          <div class="form-group">
+            <label for="checkinDate">Check-in Date *</label>
+            <input type="date" id="checkinDate" required>
+          </div>
+          <div class="form-group">
+            <label for="checkinTime">Check-in Time</label>
+            <input type="time" id="checkinTime" value="12:00">
+          </div>
+          <div class="form-group">
+            <label for="checkoutDate">Check-out Date *</label>
+            <input type="date" id="checkoutDate" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="roomType">Room Type *</label>
+            <select id="roomType">
+              <option value="Executive Room">Executive Room (From ₹2,400)</option>
+              <option value="Deluxe Room">Deluxe Room (From ₹2,700)</option>
+              <option value="Suite Room">Suite Room (From ₹3,900)</option>
+              <option value="Pent House">Pent House (From ₹6,000)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Occupancy & Rooms *</label>
+            <div id="occupancyGrid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+              <div class="occupancy-col" style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 500;">Adults</span>
+                <div class="guests-counter-wrapper">
+                  <button type="button" class="counter-btn" id="btnDecrement">-</button>
+                  <input type="number" id="guests" value="2" min="1" step="1">
+                  <button type="button" class="counter-btn" id="btnIncrement">+</button>
+                </div>
+              </div>
+              <div class="occupancy-col" style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 500;">Children</span>
+                <div class="guests-counter-wrapper">
+                  <button type="button" class="counter-btn" id="btnDecChildren">-</button>
+                  <input type="number" id="children" value="0" min="0" step="1">
+                  <button type="button" class="counter-btn" id="btnIncChildren">+</button>
+                </div>
+              </div>
+              <div class="occupancy-col" style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 500;">Rooms</span>
+                <div class="guests-counter-wrapper">
+                  <button type="button" class="counter-btn" id="btnDecRooms">-</button>
+                  <input type="number" id="roomsCount" value="1" min="1" step="1">
+                  <button type="button" class="counter-btn" id="btnIncRooms">+</button>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); opacity: 0.8; margin-top: 8px; font-style: italic; line-height: 1.4;">
+              * Children below 6 years stay complimentary sharing existing bedding. Additional child charge: ₹600 per person / night.
+            </div>
+          </div>
+        </div>
+
+        <!-- Price Summary Card -->
+        <div id="priceSummaryCard" class="price-summary-card" style="display: none; margin-top: 20px;">
+          <div class="price-summary-header">Price Estimate</div>
+          <div class="price-summary-body">
+            <div class="price-summary-line">
+              <span>Room Tariff (per person / night)</span>
+              <span id="ratePerNight">—</span>
+            </div>
+            <div class="price-summary-line">
+              <span>Nights</span>
+              <span id="numNights">—</span>
+            </div>
+            <div class="price-summary-divider"></div>
+            <div class="price-summary-line total">
+              <span>Total Estimated Price</span>
+              <span id="totalTariff">—</span>
+            </div>
+            <div class="price-info-note" id="priceInfoNote"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTS FIELDS (Hidden by default) -->
+      <div id="eventsFields" style="display: none;">
+        <div class="form-row" style="margin-bottom: 20px;">
+          <div class="form-group">
+            <label for="eventDate">Event Date *</label>
+            <input type="date" id="eventDate">
+          </div>
+          <div class="form-group">
+            <label for="eventDuration">Duration *</label>
+            <select id="eventDuration">
+              <option>Half Day</option>
+              <option selected>Full Day</option>
+              <option>Multi-Day</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row" style="margin-bottom: 20px;">
+          <div class="form-group">
+            <label for="hallType">Hall / Venue *</label>
+            <select id="hallType">
+              <option value="JASHN">JASHN — Meeting Hall (up to 35 pax)</option>
+              <option value="SHAMIYANA">SHAMIYANA — Banquet Hall (up to 125 pax)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="attendees">Number of Attendees *</label>
+            <input type="number" id="attendees" placeholder="e.g. 50" min="1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDetails">Event Requirements</label>
+          <textarea id="eventDetails" placeholder="Tell us about food, setup, or technical support requirements..."></textarea>
+        </div>
+      </div>
+
+      <!-- General Message / Special Requests -->
+      <div class="form-group" style="margin-top: 10px;">
+        <label for="specialRequests">Special Requests / Notes</label>
+        <textarea id="specialRequests" placeholder="Any requests (e.g. airport pickup, early check-in, extra bed)..."></textarea>
+      </div>
+
+      <button type="submit" class="form-submit-btn">Submit Reservation Request</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- SUCCESS OVERLAY (shown after booking submission) -->
+<div id="successOverlay" style="display:none;position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg,#0a0e15 0%,#1a2a1a 100%);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;">
+  <div style="animation:successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;">
+    <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--bg-secondary));display:flex;align-items:center;justify-content:center;margin:0 auto 28px;box-shadow:0 0 0 16px rgba(142,108,56,0.15);">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1A1520" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);font-weight:400;margin-bottom:10px;letter-spacing:0.05em;">Request Received!</div>
+    <div id="successInqNum" style="font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;"></div>
+    <div style="font-family:'Jost',sans-serif;font-size:0.95rem;color:var(--text-primary);max-width:340px;line-height:1.7;margin:0 auto 32px;">Your reservation request has been submitted successfully.<br>Please note that your booking is only confirmed by the hotel's confirmation message.</div>
+    <div style="font-family:'Jost',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.4);">Redirecting to home in <span id="countdownSec">3</span>s...</div>
+  </div>
+</div>
+<style>
+@keyframes successPop {
+  from { opacity:0; transform:scale(0.8) translateY(24px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+#checkinRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  #checkinRow {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  #occupancyGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+.custom-modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999999;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.custom-modal-box {
+  background: var(--bg-card, #2D2029); border: 1px solid var(--gold, #C7A3B8);
+  padding: 30px; max-width: 450px; width: 100%; border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
+  animation: successPop 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+.custom-modal-box h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold, #C7A3B8);
+  margin-bottom: 12px;
+}
+.custom-modal-box p {
+  font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--text-primary, #ffffff);
+  margin-bottom: 24px; line-height: 1.6;
+}
+.custom-modal-actions {
+  display: flex; gap: 16px; justify-content: center;
+}
+.custom-modal-btn {
+  padding: 10px 24px; font-family: 'Jost', sans-serif; font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+  cursor: pointer; border: none; transition: 0.2s; border-radius: 4px;
+}
+.custom-modal-btn.confirm {
+  background: var(--gold, #C7A3B8); color: var(--bg-primary, #1a1520);
+}
+.custom-modal-btn.confirm:hover {
+  background: var(--gold-light, #D4B8CA);
+}
+.custom-modal-btn.cancel {
+  background: transparent; border: 1px solid var(--border-color, rgba(255,255,255,0.2)); color: var(--text-secondary, rgba(255,255,255,0.8));
+}
+.custom-modal-btn.cancel:hover {
+  border-color: var(--gold, #C7A3B8); color: var(--text-primary, #fff);
+}
+</style>
+
+<script>
+  let bookingType = 'rooms';
+
+  // Room Rate Table matching user specifications
+  const roomRates = {
+    'Executive Room': {
+      1: 2400,
+      2: 2700,
+      3: 3300,
+      extra: 600
+    },
+    'Deluxe Room': {
+      1: 2700,
+      2: 3000,
+      3: 3600,
+      extra: 600
+    },
+    'Suite Room': {
+      1: 3900,
+      2: 4500,
+      3: 5100,
+      extra: 600
+    },
+    'Pent House': {
+      1: null, // Not Available
+      2: 6000,
+      extra: 600 // Triple is not available, falls back to Double + extra person
+    }
+  };
+
+  // Set default dates
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  document.getElementById('checkinDate').value = today.toISOString().split('T')[0];
+  document.getElementById('checkinDate').min = today.toISOString().split('T')[0];
+  document.getElementById('checkoutDate').value = tomorrow.toISOString().split('T')[0];
+  document.getElementById('checkoutDate').min = tomorrow.toISOString().split('T')[0];
+  if(document.getElementById('eventDate')) {
+    document.getElementById('eventDate').value = today.toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today.toISOString().split('T')[0];
+  }
+
+  // Dynamically load Room types and Banquet halls from Supabase
+  async function loadDropdowns() {
+    try {
+      // 1. Load rooms
+      const { data: rooms, error: roomsErr } = await _supabase
+        .from('rooms').select('*').eq('status','Available').order('id', {ascending:true});
+      if (!roomsErr && rooms && rooms.length) {
+        const select = document.getElementById('roomType');
+        select.innerHTML = rooms.map(r => `<option value="${r.name}" data-capacity="${r.capacity || 4}">${r.name} (From ₹${Number(r.price).toLocaleString('en-IN')})</option>`).join('');
+        rooms.forEach(r => {
+          roomRates[r.name] = {
+            1: Number(r.price),
+            2: r.price_double !== null && r.price_double !== undefined ? Number(r.price_double) : Number(r.price) + 300,
+            3: r.price_triple !== null && r.price_triple !== undefined ? Number(r.price_triple) : Number(r.price) + 900,
+            extra: r.price_extra !== null && r.price_extra !== undefined ? Number(r.price_extra) : 600,
+            child: r.price_child !== null && r.price_child !== undefined ? Number(r.price_child) : 600,
+            maxCapacity: r.capacity || 4
+          };
+        });
+      }
+      
+      // 2. Load banquets
+      const { data: banquets, error: banquetsErr } = await _supabase
+        .from('banquets').select('*').order('id', {ascending:true});
+      if (!banquetsErr && banquets && banquets.length) {
+        const select = document.getElementById('hallType');
+        select.innerHTML = banquets.map(b => `<option value="${b.name}">${b.name} — ${b.type} (up to ${b.capacity} pax)</option>`).join('');
+      }
+    } catch(e) {
+      console.warn('Error loading dynamic dropdowns:', e);
+    }
+  }
+
+  // Pre-fill parameters if coming from rooms or other pages
+  (async function() {
+    await loadDropdowns();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    const roomParam = urlParams.get('room');
+    
+    if (typeParam === 'conference' || typeParam === 'events') {
+      setBookingType('events');
+      if (roomParam) {
+        const select = document.getElementById('hallType');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase().includes(roomParam.toLowerCase())) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    } else if (roomParam) {
+      setBookingType('rooms');
+      const roomSelect = document.getElementById('roomType');
+      for (let i = 0; i < roomSelect.options.length; i++) {
+        if (roomSelect.options[i].value.toLowerCase().includes(roomParam.toLowerCase())) {
+          roomSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+  })();
+
+  function setBookingType(type) {
+    bookingType = type;
+    const btnRooms = document.getElementById('btnRooms');
+    const btnEvents = document.getElementById('btnEvents');
+    const roomsFields = document.getElementById('roomsFields');
+    const eventsFields = document.getElementById('eventsFields');
+
+    // inputs elements
+    const checkin = document.getElementById('checkinDate');
+    const checkout = document.getElementById('checkoutDate');
+    const eventDate = document.getElementById('eventDate');
+    const attendees = document.getElementById('attendees');
+
+    if (type === 'rooms') {
+      btnRooms.classList.add('active');
+      btnEvents.classList.remove('active');
+      roomsFields.style.display = 'block';
+      eventsFields.style.display = 'none';
+
+      checkin.setAttribute('required', '');
+      checkout.setAttribute('required', '');
+      eventDate.removeAttribute('required');
+      attendees.removeAttribute('required');
+      
+      calculateEstimatedPrice();
+    } else {
+      btnRooms.classList.remove('active');
+      btnEvents.classList.add('active');
+      roomsFields.style.display = 'none';
+      eventsFields.style.display = 'block';
+
+      checkin.removeAttribute('required');
+      checkout.removeAttribute('required');
+      eventDate.setAttribute('required', '');
+      attendees.setAttribute('required', '');
+      
+      const priceSummaryCard = document.getElementById('priceSummaryCard');
+      if (priceSummaryCard) priceSummaryCard.style.display = 'none';
+      const submitBtn = document.querySelector('.form-submit-btn');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+      }
+    }
+  }
+
+  function calculateEstimatedPrice() {
+    const checkinVal = document.getElementById('checkinDate').value;
+    const checkoutVal = document.getElementById('checkoutDate').value;
+    const roomType = document.getElementById('roomType').value;
+    const guestsInput = document.getElementById('guests');
+    const childrenInput = document.getElementById('children');
+    const roomsInput = document.getElementById('roomsCount');
+    
+    if (bookingType !== 'rooms' || !guestsInput || !childrenInput || !roomsInput) {
+      const priceSummaryCard = document.getElementById('priceSummaryCard');
+      if (priceSummaryCard) priceSummaryCard.style.display = 'none';
+      return;
+    }
+
+    const guestsCount = parseInt(guestsInput.value, 10) || 1;
+    const childrenCount = parseInt(childrenInput.value, 10) || 0;
+    const roomsCount = parseInt(roomsInput.value, 10) || 1;
+
+    const priceSummaryCard = document.getElementById('priceSummaryCard');
+    const ratePerNightSpan = document.getElementById('ratePerNight');
+    const numNightsSpan = document.getElementById('numNights');
+    const totalTariffSpan = document.getElementById('totalTariff');
+    const priceInfoNote = document.getElementById('priceInfoNote');
+    const submitBtn = document.querySelector('.form-submit-btn');
+
+    if (!checkinVal || !checkoutVal || !roomType) {
+      priceSummaryCard.style.display = 'none';
+      return;
+    }
+
+    const checkinDate = new Date(checkinVal);
+    const checkoutDate = new Date(checkoutVal);
+    
+    // Calculate nights
+    const diffTime = checkoutDate - checkinDate;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const numNights = diffDays > 0 ? diffDays : 0;
+
+    // Rate Calculation
+    const rates = roomRates[roomType];
+    let dailyRate = 0;
+    let isAvailable = true;
+    let noteText = '';
+
+    if (!rates) {
+      priceSummaryCard.style.display = 'none';
+      return;
+    }
+
+    // Distribute guests across the rooms
+    let guestsPerRoom = Array(roomsCount).fill(0);
+    for (let i = 0; i < guestsCount; i++) {
+      guestsPerRoom[i % roomsCount]++;
+    }
+
+    let totalDailyRate = 0;
+    let rateDetails = [];
+
+    for (let i = 0; i < roomsCount; i++) {
+      const guests = guestsPerRoom[i];
+      let roomRate = 0;
+      if (roomType === 'Pent House') {
+        if (guests === 1) {
+          roomRate = rates[2] || 6000; // Pent House double occupancy fallback
+        } else if (guests === 2) {
+          roomRate = rates[2] || 6000;
+        } else {
+          roomRate = (rates[2] || 6000) + (guests - 2) * (rates.extra || 600);
+        }
+      } else {
+        if (guests === 0) {
+          roomRate = rates[1] || 2400;
+        } else if (guests === 1) {
+          roomRate = rates[1] || 2400;
+        } else if (guests === 2) {
+          roomRate = rates[2] || 2700;
+        } else if (guests === 3) {
+          roomRate = rates[3] || 3300;
+        } else {
+          roomRate = (rates[3] || 3300) + (guests - 3) * (rates.extra || 600);
+        }
+      }
+      totalDailyRate += roomRate;
+      rateDetails.push(roomRate);
+    }
+
+    dailyRate = totalDailyRate;
+
+    // Add children charge: dynamic per child per night based on room rates
+    const singleChildPrice = rates && rates.child !== undefined && rates.child !== null ? rates.child : 600;
+    const childCharge = childrenCount * singleChildPrice;
+    dailyRate += childCharge;
+
+    if (roomsCount > 1) {
+      noteText = `${roomsCount} rooms of same type. Rate details: ${rateDetails.map(r => `₹${r.toLocaleString('en-IN')}`).join(' + ')} per person / night.`;
+    } else {
+      noteText = `Rate details: ₹${rateDetails[0].toLocaleString('en-IN')} per person / night.`;
+    }
+
+    if (childCharge > 0) {
+      noteText += ` Plus child charge: ₹${childCharge.toLocaleString('en-IN')} per person / night (₹${singleChildPrice.toLocaleString('en-IN')} per child).`;
+    }
+
+    if (numNights <= 0) {
+      priceSummaryCard.style.display = 'none';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+      }
+      return;
+    }
+
+    priceSummaryCard.style.display = 'block';
+
+    if (!isAvailable) {
+      ratePerNightSpan.innerHTML = '<span class="price-warning">Not Available</span>';
+      totalTariffSpan.innerHTML = '<span class="price-warning">Not Available</span>';
+      numNightsSpan.textContent = numNights + (numNights === 1 ? ' night' : ' nights');
+      priceInfoNote.innerHTML = `<span class="price-warning">${noteText}</span>`;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+      }
+    } else {
+      const totalPrice = dailyRate * numNights;
+      ratePerNightSpan.textContent = `₹${dailyRate.toLocaleString('en-IN')}`;
+      numNightsSpan.textContent = `${numNights} ${numNights === 1 ? 'night' : 'nights'}`;
+      totalTariffSpan.textContent = `₹${totalPrice.toLocaleString('en-IN')}`;
+      priceInfoNote.innerHTML = `* ${noteText}<br>* Booking is only confirmed by the hotel's confirmation message.`;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+      }
+    }
+  }
+
+  async function handleBookingSubmit(e) {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('emailAddr').value.trim();
+    const phone     = document.getElementById('phoneNum').value.trim();
+
+    if (!firstName || !email || !phone) {
+      showToast('Please fill out all required fields.');
+      return;
+    }
+
+    const btn = document.querySelector('.form-submit-btn');
+    const origText = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+    let payload = {
+      first_name: firstName,
+      last_name:  lastName,
+      email:      email,
+      phone:      phone,
+    };
+
+    if (bookingType === 'rooms') {
+      const totalEl  = document.getElementById('totalTariff');
+      const estAmt   = totalEl ? parseFloat((totalEl.textContent || '').replace(/[^0-9.]/g, '')) : null;
+      
+      // Save rooms count with quantity appended to room type if Qty > 1
+      const selectedRoom = document.getElementById('roomType').value;
+      const roomsCountVal = parseInt(document.getElementById('roomsCount').value, 10) || 1;
+      const roomTypeFinal = roomsCountVal > 1 ? `${selectedRoom} (Qty: ${roomsCountVal})` : selectedRoom;
+      
+      // Prepend check-in time to special requests
+      const checkinTimeVal = document.getElementById('checkinTime').value || '12:00';
+      const specialReqsVal = document.getElementById('specialRequests').value.trim();
+      const finalNotes = `[Check-in Time: ${checkinTimeVal}]` + (specialReqsVal ? ` ${specialReqsVal}` : '');
+
+      payload = { ...payload,
+        inquiry_type:     'booking_room',
+        enquiry_category: 'Room Booking',
+        status:           'Pending',
+        room_type:        roomTypeFinal,
+        check_in:         document.getElementById('checkinDate').value,
+        check_out:        document.getElementById('checkoutDate').value,
+        adults:           parseInt(document.getElementById('guests').value) || 1,
+        children:         parseInt(document.getElementById('children').value) || 0,
+        estimated_amount: (estAmt && !isNaN(estAmt)) ? estAmt : null,
+        special_requests: finalNotes,
+      };
+    } else {
+      payload = { ...payload,
+        inquiry_type:     'booking_event',
+        enquiry_category: 'Conference / Event',
+        status:           'Pending',
+        event_date:       document.getElementById('eventDate').value,
+        event_duration:   document.getElementById('eventDuration').value,
+        hall_type:        document.getElementById('hallType').value,
+        attendees:        parseInt(document.getElementById('attendees').value) || 0,
+        message:          document.getElementById('eventDetails').value.trim(),
+        special_requests: document.getElementById('specialRequests').value.trim(),
+      };
+    }
+
+    try {
+      let finalInqNumber = '';
+      try {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const startOfMonth = new Date(year, now.getMonth(), 1).toISOString();
+
+        const { count, error: countErr } = await _supabase
+          .from('inquiries')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', startOfMonth);
+
+        if (countErr) throw countErr;
+
+        const nextSeq = (count || 0) + 1;
+        const seqStr = String(nextSeq).padStart(4, '0');
+        const dateStr = `${year}${month}${String(now.getDate()).padStart(2, '0')}`;
+        finalInqNumber = `INQ-${dateStr}-${seqStr}`;
+      } catch (err) {
+        console.warn('Error generating inquiry number client-side:', err);
+        const now = new Date();
+        const seqStr = String(Math.floor(1000 + Math.random() * 9000));
+        const dateStr = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+        finalInqNumber = `INQ-${dateStr}-${seqStr}`;
+      }
+
+      payload.inquiry_number = finalInqNumber;
+
+      const { data, error } = await _supabase
+        .from('inquiries')
+        .insert([payload])
+        .select('inquiry_number')
+        .single();
+
+      if (error) throw error;
+
+      const inqNum = data.inquiry_number || payload.inquiry_number;
+
+      // Show full-screen success overlay (impossible to miss!)
+      const overlay = document.getElementById('successOverlay');
+      const inqNumEl = document.getElementById('successInqNum');
+      const countdownEl = document.getElementById('countdownSec');
+      if (overlay) {
+        if (inqNumEl) inqNumEl.textContent = `Inquiry #${inqNum}`;
+        overlay.style.display = 'flex';
+        // Countdown
+        let secs = 3;
+        const timer = setInterval(() => {
+          secs--;
+          if (countdownEl) countdownEl.textContent = secs;
+          if (secs <= 0) {
+            clearInterval(timer);
+            window.location.href = 'index.html';
+          }
+        }, 1000);
+      } else {
+        // Fallback if overlay missing
+        showToast(`✓ Request ${inqNum} received! Redirecting...`, true);
+        setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+      }
+
+      // Reset form in background
+      document.getElementById('bookingForm').reset();
+      if (document.getElementById('guests'))   document.getElementById('guests').value   = 2;
+      if (document.getElementById('children')) document.getElementById('children').value = 0;
+      if (document.getElementById('roomsCount')) document.getElementById('roomsCount').value = 1;
+      calculateEstimatedPrice();
+    } catch (err) {
+      console.error('Supabase error:', err);
+      showToast('Submission failed. Please call +91 9960013388 directly.');
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = origText; }
+    }
+  }
+
+  function showToast(msg, gold = false) {
+    const t = document.getElementById('toast');
+    // Add a checkmark for success (gold) toasts
+    if (gold) {
+      t.innerHTML = `<span style="font-size:1.1rem;margin-right:8px;">✓</span>${msg}`;
+    } else {
+      t.innerHTML = `<span style="font-size:1.1rem;margin-right:8px;">⚠</span>${msg}`;
+    }
+    t.className = 'toast' + (gold ? ' toast-gold' : '') + ' show';
+    // Scroll to top so toast is visible on mobile
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const duration = gold ? 5000 : 4000;
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // Global functions for custom room addition warning modal
+  window.showAddRoomModal = function(roomName, maxCap) {
+    document.getElementById('popupRoomType').textContent = roomName;
+    document.getElementById('popupMaxCap').textContent = maxCap;
+    document.getElementById('addRoomModal').style.display = 'flex';
+  };
+
+  window.closeAddRoomModal = function(confirmAdd) {
+    document.getElementById('addRoomModal').style.display = 'none';
+    const guestsInput = document.getElementById('guests');
+    const roomsInput = document.getElementById('roomsCount');
+    const selectedRoom = document.getElementById('roomType')?.value;
+    const maxCap = (selectedRoom && roomRates[selectedRoom]?.maxCapacity) || 4;
+
+    if (confirmAdd) {
+      let roomsVal = parseInt(roomsInput.value, 10) || 1;
+      roomsInput.value = roomsVal + 1;
+      
+      let guestsVal = parseInt(guestsInput.value, 10) || 1;
+      guestsInput.value = guestsVal + 1;
+      
+      roomsInput.dispatchEvent(new Event('change'));
+      guestsInput.dispatchEvent(new Event('change'));
+    } else {
+      // Keep guests at current room capacity limit
+      let roomsVal = parseInt(roomsInput.value, 10) || 1;
+      guestsInput.value = roomsVal * maxCap;
+      guestsInput.dispatchEvent(new Event('change'));
+    }
+  };
+
+  // Setup event listeners for counter buttons and date fields
+  document.addEventListener('DOMContentLoaded', () => {
+    const guestsInput = document.getElementById('guests');
+    const btnDecrement = document.getElementById('btnDecrement');
+    const btnIncrement = document.getElementById('btnIncrement');
+    
+    const childrenInput = document.getElementById('children');
+    const btnDecChildren = document.getElementById('btnDecChildren');
+    const btnIncChildren = document.getElementById('btnIncChildren');
+    
+    const roomsInput = document.getElementById('roomsCount');
+    const btnDecRooms = document.getElementById('btnDecRooms');
+    const btnIncRooms = document.getElementById('btnIncRooms');
+    
+    const roomTypeSelect = document.getElementById('roomType');
+    const checkinInput = document.getElementById('checkinDate');
+    const checkoutInput = document.getElementById('checkoutDate');
+
+    if (guestsInput && btnDecrement && btnIncrement) {
+      btnDecrement.addEventListener('click', () => {
+        let val = parseInt(guestsInput.value, 10) || 1;
+        if (val > 1) {
+          guestsInput.value = val - 1;
+          guestsInput.dispatchEvent(new Event('change'));
+        }
+      });
+
+      btnIncrement.addEventListener('click', () => {
+        let val = parseInt(guestsInput.value, 10) || 1;
+        // Check max capacity of selected room relative to current room count
+        const selectedRoom = document.getElementById('roomType')?.value;
+        const maxCap = (selectedRoom && roomRates[selectedRoom]?.maxCapacity) || 4;
+        const currentRooms = parseInt(roomsInput.value, 10) || 1;
+        if (val >= currentRooms * maxCap) {
+          showAddRoomModal(selectedRoom, maxCap);
+          return;
+        }
+        guestsInput.value = val + 1;
+        guestsInput.dispatchEvent(new Event('change'));
+      });
+
+      guestsInput.addEventListener('input', () => {
+        let val = parseInt(guestsInput.value, 10);
+        if (!isNaN(val) && val >= 1) {
+          const selectedRoom = document.getElementById('roomType')?.value;
+          const maxCap = (selectedRoom && roomRates[selectedRoom]?.maxCapacity) || 4;
+          const currentRooms = parseInt(roomsInput.value, 10) || 1;
+          if (val > currentRooms * maxCap) {
+            showAddRoomModal(selectedRoom, maxCap);
+          } else {
+            calculateEstimatedPrice();
+          }
+        }
+      });
+
+      guestsInput.addEventListener('blur', () => {
+        let val = parseInt(guestsInput.value, 10);
+        if (isNaN(val) || val < 1) {
+          guestsInput.value = 1;
+        }
+        calculateEstimatedPrice();
+      });
+
+      guestsInput.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    if (roomsInput && btnDecRooms && btnIncRooms) {
+      btnDecRooms.addEventListener('click', () => {
+        let val = parseInt(roomsInput.value, 10) || 1;
+        if (val > 1) {
+          roomsInput.value = val - 1;
+          roomsInput.dispatchEvent(new Event('change'));
+          // Adjust guests if they exceed new max capacity
+          const selectedRoom = document.getElementById('roomType')?.value;
+          const maxCap = (selectedRoom && roomRates[selectedRoom]?.maxCapacity) || 4;
+          let guestsVal = parseInt(guestsInput.value, 10) || 1;
+          if (guestsVal > (val - 1) * maxCap) {
+            guestsInput.value = (val - 1) * maxCap;
+            guestsInput.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+
+      btnIncRooms.addEventListener('click', () => {
+        let val = parseInt(roomsInput.value, 10) || 1;
+        roomsInput.value = val + 1;
+        roomsInput.dispatchEvent(new Event('change'));
+      });
+
+      roomsInput.addEventListener('input', () => {
+        let val = parseInt(roomsInput.value, 10);
+        if (!isNaN(val) && val >= 1) {
+          calculateEstimatedPrice();
+        }
+      });
+
+      roomsInput.addEventListener('blur', () => {
+        let val = parseInt(roomsInput.value, 10);
+        if (isNaN(val) || val < 1) {
+          roomsInput.value = 1;
+        }
+        calculateEstimatedPrice();
+      });
+
+      roomsInput.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    if (childrenInput && btnDecChildren && btnIncChildren) {
+      btnDecChildren.addEventListener('click', () => {
+        let val = parseInt(childrenInput.value, 10) || 0;
+        if (val > 0) {
+          childrenInput.value = val - 1;
+          childrenInput.dispatchEvent(new Event('change'));
+        }
+      });
+
+      btnIncChildren.addEventListener('click', () => {
+        let val = parseInt(childrenInput.value, 10) || 0;
+        childrenInput.value = val + 1;
+        childrenInput.dispatchEvent(new Event('change'));
+      });
+
+      childrenInput.addEventListener('input', () => {
+        let val = parseInt(childrenInput.value, 10);
+        if (!isNaN(val) && val >= 0) {
+          calculateEstimatedPrice();
+        }
+      });
+
+      childrenInput.addEventListener('blur', () => {
+        let val = parseInt(childrenInput.value, 10);
+        if (isNaN(val) || val < 0) {
+          childrenInput.value = 0;
+        }
+        calculateEstimatedPrice();
+      });
+
+      childrenInput.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    if (roomTypeSelect) {
+      roomTypeSelect.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    if (checkinInput) {
+      checkinInput.addEventListener('change', () => {
+        const checkinVal = checkinInput.value;
+        if (checkinVal) {
+          const checkinDate = new Date(checkinVal);
+          const nextDay = new Date(checkinDate);
+          nextDay.setDate(nextDay.getDate() + 1);
+          checkoutInput.min = nextDay.toISOString().split('T')[0];
+          
+          if (new Date(checkoutInput.value) <= checkinDate) {
+            checkoutInput.value = nextDay.toISOString().split('T')[0];
+          }
+        }
+        calculateEstimatedPrice();
+      });
+    }
+
+    if (checkoutInput) {
+      checkoutInput.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    // Run once on load
+    calculateEstimatedPrice();
+  });
+</script>
+<script src="theme.js"></script>
+
+<!-- FLOATING CALL & MAP BUTTONS -->
+<a href="https://wa.me/919960013388?text=Hello%20Hotel%20City%20Park%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" rel="noopener" class="floating-call-btn" aria-label="Chat on WhatsApp" style="background:#25D366">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<a href="https://maps.app.goo.gl/NY7Gox9tMCJ6neS7A" target="_blank" rel="noopener" class="floating-map-btn" aria-label="Open Google Maps Location">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  </svg>
+</a>
+
+<script>
+(function() {
+  if (location.protocol === 'file:') return;
+  // Inject manifest dynamically (avoids CORS error on file://)
+  if (!document.querySelector('link[rel="manifest"]')) {
+    const lnk = document.createElement('link');
+    lnk.rel = 'manifest'; lnk.href = './manifest.json';
+    document.head.appendChild(lnk);
+  }
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .catch(err => console.warn('[CityPark] SW:', err));
+    });
+  }
+})();
+</script>
+
+<!-- ADD ROOM DIALOG -->
+<div id="addRoomModal" class="custom-modal-backdrop" style="display:none;">
+  <div class="custom-modal-box">
+    <h3>Add Additional Room?</h3>
+    <p>You have exceeded the maximum capacity of <strong><span id="popupRoomType"></span></strong> (<span id="popupMaxCap"></span> guests per room). Would you like to add another room of the same type?</p>
+    <div class="custom-modal-actions">
+      <button type="button" class="custom-modal-btn cancel" onclick="closeAddRoomModal(false)">Cancel</button>
+      <button type="button" class="custom-modal-btn confirm" onclick="closeAddRoomModal(true)">Add Room</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel City Park — Where Cozy Memory Lasts · Solapur</title>
+<meta name="description" content="Welcome to Hotel City Park in Solapur. Located just 1km from Solapur Railway Station, opposite the Fort and Cricket Stadium. Premium rooms, banquets, and dining.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#9B3A6A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="City Park">
+<link rel="apple-touch-icon" href="logo.png">
+<script>
+  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      const hour = new Date().getHours();
+      const isNight = hour >= 19 || hour < 5;
+      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    }
+  })();
+</script>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-content">
+    <h2 class="preloader-title">Welcome to Hotel City Park</h2>
+    <div class="preloader-bar-wrap">
+      <div class="preloader-bar" id="preloaderBar"></div>
+    </div>
+    <div class="preloader-percentage" id="preloaderPercentage">0%</div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo" id="logoLink">
+    <span class="name">City Park</span>
+    <span class="tag">by JMG Hospitality & Infra · Solapur</span>
+  </a>
+  <ul class="nav-links">
+  <li><a href="index.html" id="navHome">Home</a></li>
+  <li><a href="rooms.html" id="navRooms">Rooms</a></li>
+  <li><a href="halls.html" id="navHalls">Halls</a></li>
+  <li><a href="dining.html" id="navDining">Dining</a></li>
+  <li><a href="pricing.html" id="navPricing">Pricing</a></li>
+  <li><a href="contact.html" id="navContact">Contact</a></li>
+</ul>
+  <div style="display: flex; align-items: center;">
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <a href="booking.html" class="nav-book" id="navBookBtn">Book Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mob-back" onclick="toggleMobileMenu()" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+  </button>
+  <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+  <a href="rooms.html" onclick="toggleMobileMenu()">Rooms</a>
+  <a href="halls.html" onclick="toggleMobileMenu()">Halls & Banquets</a>
+  <a href="rooms.html#amenities" onclick="toggleMobileMenu()">Amenities</a>
+  <a href="dining.html" onclick="toggleMobileMenu()">Dining</a>
+
+  <a href="contact.html" onclick="toggleMobileMenu()">Contact Info</a>
+  <a href="booking.html" onclick="toggleMobileMenu();" style="color:var(--gold)">Book Now</a>
+  
+  <button id="mobileThemeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin: 24px auto 0; border: 1px solid var(--border-color); color: var(--text-primary);">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- HERO SPLIT -->
+<section class="hero-split" id="home">
+  <div class="hero-split-left">
+    <div class="hero-split-content">
+      <img src="logo.png" alt="Hotel City Park Logo" class="hero-logo-img">
+      <h1 class="hero-title">Hotel City Park Solapur</h1>
+      <div class="hero-mobile-img-wrap">
+        <img id="heroMobileImage" src="cityparkday.png" alt="Hotel City Park Exterior" class="hero-mobile-img">
+      </div>
+      <div class="hero-split-actions">
+        <a href="contact.html" class="btn-primary">Contact Us</a>
+        <a href="booking.html" class="btn-outline">Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-split-right">
+    <div class="hero-image-container">
+      <img id="heroImage" src="cityparkday.png" alt="Hotel City Park Exterior" class="hero-img">
+    </div>
+  </div>
+</section>
+
+<!-- NEARBY LANDMARKS SECTION -->
+<section class="section landmark-section" id="landmarks">
+  <div class="section-inner">
+    <p class="sec-label">Exploration</p>
+    <h2 class="sec-title" style="text-align: center;">Nearby <em>Landmarks</em></h2>
+    <div class="sec-divider" style="margin: 24px auto 32px;"></div>
+    <p class="sec-desc" style="margin: 0 auto; text-align: center; max-width: 600px;">Hotel City Park is centrally situated in Solapur, placing you within moments of the city's key travel terminals, heritage landmarks, and religious centers.</p>
+    
+    <div class="slider-container">
+      <div class="landmark-track" id="landmarkTrack">
+        <!-- Card 1: Railway Station -->
+        <div class="landmark-slide prev">
+          <img src="railwaystation.jpg" alt="Solapur Railway Station & Bus Stand">
+          <div class="landmark-info">
+            <span class="landmark-distance">1 km away</span>
+            <h3 class="landmark-title">Railway Station & Bus Stand</h3>
+          </div>
+        </div>
+        
+        <!-- Card 2: Fort & Cricket Stadium (Center Active) -->
+        <div class="landmark-slide active">
+          <img src="fort.jpg" alt="Solapur Fort & Cricket Stadium">
+          <div class="landmark-info">
+            <span class="landmark-distance">Opposite of</span>
+            <h3 class="landmark-title">Fort & Cricket Stadium</h3>
+          </div>
+        </div>
+        
+        <!-- Card 3: Shri Siddheshwar Temple -->
+        <div class="landmark-slide next">
+          <img src="temple.jpg" alt="Shri Siddheshwar Temple">
+          <div class="landmark-info">
+            <span class="landmark-distance">Walkable</span>
+            <h3 class="landmark-title">Shri Siddheshwar Temple</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Navigation Controls -->
+    <div class="slider-controls">
+      <button class="slider-control-btn" id="prevLandmark" aria-label="Previous Landmark">
+        <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="slider-control-btn" id="nextLandmark" aria-label="Next Landmark">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLY RATED PLATFORMS MARQUEE -->
+<section class="section ratings-section" style="background: var(--bg-primary); padding: 64px 0; border-bottom: 1px solid var(--border-color); overflow: hidden;">
+  <div style="text-align: center; margin-bottom: 32px; padding: 0 24px;">
+    <h2 style="font-family: 'Jost', sans-serif; font-size: 1.35rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary);">Trusted by Leading Travel Platforms</h2>
+    <div style="width: 48px; height: 1px; background: var(--gold); margin: 16px auto 0;"></div>
+  </div>
+  
+  <div class="logo-marquee">
+    <div class="logo-marquee-track">
+      <!-- Original Set -->
+      <div class="logo-slide"><img src="makemytrip.png" alt="MakeMyTrip"></div>
+      <div class="logo-slide"><img src="bookingcomlogo.jpg" alt="Booking.com"></div>
+      <div class="logo-slide"><img src="Trivago.jpg" alt="Trivago"></div>
+      <div class="logo-slide"><img src="agodalogo.jpg" alt="Agoda.com"></div>
+      <div class="logo-slide"><img src="easemytriplogo.png" alt="EaseMyTrip"></div>
+      <div class="logo-slide"><img src="Justdial.png" alt="JustDial"></div>
+      <div class="logo-slide"><img src="tripadvisorlogo.jpg" alt="Trip Advisor"></div>
+      <div class="logo-slide"><img src="guestreservationslogo.png" alt="Guest Reservations"></div>
+      
+      <!-- Duplicate Set for Seamless Loop -->
+      <div class="logo-slide"><img src="makemytrip.png" alt="MakeMyTrip"></div>
+      <div class="logo-slide"><img src="bookingcomlogo.jpg" alt="Booking.com"></div>
+      <div class="logo-slide"><img src="Trivago.jpg" alt="Trivago"></div>
+      <div class="logo-slide"><img src="agodalogo.jpg" alt="Agoda.com"></div>
+      <div class="logo-slide"><img src="easemytriplogo.png" alt="EaseMyTrip"></div>
+      <div class="logo-slide"><img src="Justdial.png" alt="JustDial"></div>
+      <div class="logo-slide"><img src="tripadvisorlogo.jpg" alt="Trip Advisor"></div>
+      <div class="logo-slide"><img src="guestreservationslogo.png" alt="Guest Reservations"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS TEASER -->
+<section class="section" id="rooms" style="background: var(--bg-secondary);">
+  <div class="section-inner">
+    <p class="sec-label" style="text-align: center;">Accommodation</p>
+    <h2 class="sec-title" style="text-align: center;">Our Rooms & <em>Suites</em></h2>
+    <div class="sec-divider" style="margin: 24px auto 32px;"></div>
+    <p class="sec-desc" style="margin: 0 auto 56px; text-align: center; max-width: 650px;">Choose from our range of elegantly designed rooms and suites, each tailored to provide utmost comfort.</p>
+
+    <div class="rooms-grid" id="homeRoomsGrid">
+      <!-- loaded from Supabase via admin panel -->
+      <div class="video-room-card" style="pointer-events:none;opacity:.4">
+        <div class="video-room-card-inner" style="background:var(--bg-secondary);display:flex;align-items:center;justify-content:center">
+          <div style="color:var(--text-muted);font-size:.85rem">Loading rooms...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View All Button -->
+    <div style="text-align: center; margin-top: 56px; margin-bottom: 72px;">
+      <a href="rooms.html" class="btn-primary" id="viewRoomsBtn" style="border-radius: 50px; padding: 16px 40px;">View All Rooms</a>
+    </div>
+
+    <!-- AMENITIES & SERVICES ACCORDION -->
+    <div class="amenities-accordion-wrap" style="margin-top: 80px;">
+      <p class="sec-label" style="text-align: center;">Comforts</p>
+      <h2 class="sec-title" style="text-align: center;">Amenities & <em>Services</em></h2>
+      <div class="sec-divider" style="margin: 24px auto 32px;"></div>
+      <p class="sec-desc" style="margin: 0 auto 36px; text-align: center; max-width: 600px;">At Hotel City Park, we offer a range of facilities to enhance your stay:</p>
+      
+      <!-- Accordion Pill Header -->
+      <div class="amenities-accordion-header" id="amenitiesAccordionHeader">
+        <span>Explore Amenities</span>
+        <span class="accordion-icon" id="accordionIcon">+</span>
+      </div>
+      
+      <!-- Accordion Expanded Panel -->
+      <div class="amenities-accordion-panel" id="amenitiesAccordionPanel">
+        <div class="amenities-list-grid">
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Free High-Speed Wi-Fi
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Business Center & Meeting Rooms
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> In-Room Dining & Room Service
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Concierge & Travel Desk
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Valet & Secure Parking
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Professional Laundry Service
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Accessibility Features
+          </div>
+          <div class="amenity-list-item">
+            <span class="amenity-bullet">•</span> Private Luxury Bathrooms
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONFERENCE TEASER -->
+<section class="section conference-section" id="conference">
+  <div class="section-inner">
+    <p class="sec-label">Events & Meetings</p>
+    <h2 class="sec-title">Conference & <em>Banquets</em></h2>
+    <div class="sec-divider"></div>
+    <div class="conference-layout">
+      <div class="conf-image-wrap">
+        <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=900&q=80" alt="Conference Hall" loading="lazy">
+        <div class="conf-cards">
+          <div class="conf-card">
+            <h4>JASHN — Meeting Hall</h4>
+            <p>Capacity: up to 35 guests<br>Ideal for corporate meets & seminars</p>
+          </div>
+          <div class="conf-card">
+            <h4>SHAMIYANA — Banquet Hall</h4>
+            <p>Capacity: up to 125 guests<br>Weddings, receptions & grand events</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="sec-desc">Hotel City Park offers two dedicated event spaces in the heart of Solapur — perfect for corporate meetings, seminars, weddings and social celebrations. Customised catering and full event support included.</p>
+        <ul class="conf-features" style="margin-bottom: 32px;">
+          <li>JASHN Meeting Hall — 35 pax capacity</li>
+          <li>SHAMIYANA Banquet Hall — 125 pax capacity</li>
+          <li>Full WiFi access & audiovisual support</li>
+          <li>On-site secure parking & event support</li>
+        </ul>
+        <a href="halls.html" class="btn-primary" id="exploreVenuesBtn">Explore Venues</a>
+        <a href="halls.html" class="btn-outline" id="bookEventBtn">Book Event Space</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES SHIFTED TO ACCORDION UNDER ROOMS -->
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <p class="sec-label">Gallery</p>
+    <h2 class="sec-title">Discover <em>City Park</em></h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="gallery-scroll-wrap">
+    <div class="gallery-track" id="galleryTrack">
+      <!-- loaded dynamically from Supabase gallery table -->
+      <div class="gal-item" style="opacity:.3">
+        <div style="width:380px;height:260px;background:var(--bg-secondary);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.85rem">Loading gallery...</div>
+      </div>
+    </div>
+    <div class="gallery-arrows">
+      <button class="gal-arrow" onclick="scrollGallery(-1)" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="gal-arrow" onclick="scrollGallery(1)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- DINING TEASER -->
+<section id="dining">
+  <div class="dining-layout">
+    <div class="dining-img">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Restaurant" loading="lazy">
+    </div>
+    <div class="dining-content">
+      <p class="sec-label">Food & Beverage</p>
+      <h2 class="sec-title">A Culinary <em>Journey</em></h2>
+      <div class="sec-divider"></div>
+      <p class="sec-desc">Our in-house restaurant serves a delicious spread of Indian and continental cuisine. Start your day with our breakfast buffet and unwind with evening meals in a warm, welcoming setting.</p>
+      <div class="dining-tags">
+        <span class="dining-tag">Buffet Breakfast</span>
+        <span class="dining-tag">In-Room Dining</span>
+        <span class="dining-tag">24hr Room Service</span>
+      </div>
+      <a href="dining.html" class="btn-primary" style="margin-top:32px;" id="exploreDiningBtn">Explore Dining Experience</a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-row-main">
+      <!-- Logo Column -->
+      <div class="footer-brand-col">
+        <img src="logo.png" alt="Hotel City Park Logo" class="footer-logo-img">
+        <span class="footer-logo-name">City Park</span>
+        <span class="footer-logo-tag">SOLAPUR</span>
+      </div>
+      
+      <!-- Address Column -->
+      <div class="footer-info-col">
+        <h3>Address</h3>
+        <p>119, Murarji Peth,<br>Near Park Chowk,<br>Solapur, Maharashtra, 413001.</p>
+      </div>
+      
+      <!-- Contact Column -->
+      <div class="footer-info-col">
+        <h3>Contact</h3>
+        <p>
+          <a href="tel:02172729791">0217-2729791 / 92 / 93</a><br>
+          <a href="tel:+919960013388">+91 9960013388</a><br>
+          <a href="mailto:hcitypark@rediffmail.com">hcitypark@rediffmail.com</a>
+        </p>
+      </div>
+      
+      <!-- Right/Social Column -->
+      <div class="footer-right-col">
+        <div class="footer-social-icons">
+          <a href="https://www.instagram.com/hotelcityparksolapur?igsh=MXNwM3JnaHRsOGc4cQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        </div>
+        <div class="footer-copyright">
+          © 2026 | Hotel City Park.<br>
+          <span style="font-size: 0.72rem; color: var(--muted); font-weight: 500;">by JMG Hospitality & Infra</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Strip -->
+  <div class="footer-strip">
+    <div class="footer-strip-links">
+      <a href="#">Privacy Policy</a> | 
+      <a href="pricing.html#pricing-details">Cancellation Policy</a> | 
+      <a href="#">Terms & Conditions</a> | 
+      <a href="#">Cookie Policy</a> | 
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // â”€â”€ PRELOADER IMAGE TRACKING â”€â”€
+  document.addEventListener("DOMContentLoaded", () => {
+    const images = [];
+    
+    // 1. Grab slide background images (from style rules or inline, here slide-1..4 are computed)
+    const slides = document.querySelectorAll('.hero-slide');
+    slides.forEach(slide => {
+      const style = window.getComputedStyle(slide);
+      const bg = style.backgroundImage;
+      if (bg && bg !== 'none') {
+        const url = bg.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+        images.push(url);
+      }
+    });
+
+    // 2. Grab standard HTML images
+    const imgTags = document.querySelectorAll('img');
+    imgTags.forEach(img => {
+      if (img.src) {
+        images.push(img.src);
+      }
+    });
+
+    // Unique list
+    const uniqueImages = [...new Set(images)];
+    const total = uniqueImages.length;
+    let loaded = 0;
+    
+    const preloader = document.getElementById('preloader');
+    const bar = document.getElementById('preloaderBar');
+    const percentText = document.getElementById('preloaderPercentage');
+
+    function updateProgress() {
+      loaded++;
+      const percentage = Math.min(Math.round((loaded / total) * 100), 100);
+      bar.style.width = `${percentage}%`;
+      percentText.textContent = `${percentage}%`;
+
+      if (loaded >= total) {
+        finishLoading();
+      }
+    }
+
+    function finishLoading() {
+      bar.style.width = '100%';
+      percentText.textContent = '100%';
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        // Trigger hero content animation
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) {
+          heroContent.style.opacity = '1';
+          heroContent.style.transform = 'translateY(0)';
+          heroContent.style.transition = 'opacity 1s ease 0.2s, transform 1s ease 0.2s';
+        }
+      }, 400);
+    }
+
+    if (total === 0) {
+      finishLoading();
+    } else {
+      uniqueImages.forEach(src => {
+        const img = new Image();
+        img.onload = updateProgress;
+        img.onerror = updateProgress; // count failed images to prevent blocking
+        img.src = src;
+      });
+    }
+
+    // Fallback in case of slow connections
+    setTimeout(() => {
+      if (!preloader.classList.contains('fade-out')) {
+        finishLoading();
+      }
+    }, 5000);
+  });
+
+  // â”€â”€ GALLERY SCROLL â”€â”€
+  function scrollGallery(dir) {
+    const track = document.getElementById('galleryTrack');
+    const firstItem = track ? track.querySelector('.gal-item') : null;
+    const scrollAmount = firstItem ? firstItem.offsetWidth + 12 : 440;
+    if (track) {
+      track.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  // â”€â”€ NAVBAR SCROLL â”€â”€
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // â”€â”€ 3D LANDMARK SLIDER â”€â”€
+  let activeIndex = 1; // Center slide initially
+  const landmarkSlides = document.querySelectorAll('.landmark-slide');
+  let autoRotateInterval;
+
+  function updateSlider() {
+    landmarkSlides.forEach((slide, index) => {
+      if (window.innerWidth <= 768) {
+        slide.classList.remove('active', 'prev', 'next', 'hidden');
+        if (index === activeIndex) {
+          slide.classList.add('active');
+        } else if (index === (activeIndex - 1 + landmarkSlides.length) % landmarkSlides.length) {
+          slide.classList.add('prev');
+        } else if (index === (activeIndex + 1) % landmarkSlides.length) {
+          slide.classList.add('next');
+        } else {
+          slide.classList.add('hidden');
+        }
+      } else {
+        slide.classList.remove('active', 'prev', 'next', 'hidden');
+      }
+    });
+  }
+
+  function startAutoRotate() {
+    stopAutoRotate();
+    autoRotateInterval = setInterval(() => {
+      if (window.innerWidth <= 768) {
+        activeIndex = (activeIndex + 1) % landmarkSlides.length;
+        updateSlider();
+      }
+    }, 2000);
+  }
+
+  function stopAutoRotate() {
+    if (autoRotateInterval) {
+      clearInterval(autoRotateInterval);
+    }
+  }
+
+  landmarkSlides.forEach((slide, index) => {
+    slide.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        activeIndex = index;
+        updateSlider();
+        startAutoRotate(); // Reset interval on click
+      }
+    });
+  });
+
+  const prevBtn = document.getElementById('prevLandmark');
+  const nextBtn = document.getElementById('nextLandmark');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      activeIndex = (activeIndex - 1 + landmarkSlides.length) % landmarkSlides.length;
+      updateSlider();
+      startAutoRotate(); // Reset interval on click
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      activeIndex = (activeIndex + 1) % landmarkSlides.length;
+      updateSlider();
+      startAutoRotate(); // Reset interval on click
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    updateSlider();
+    if (window.innerWidth <= 768) {
+      startAutoRotate();
+    } else {
+      stopAutoRotate();
+    }
+  });
+
+  updateSlider();
+  if (window.innerWidth <= 768) {
+    startAutoRotate();
+  }
+
+  // â”€â”€ MOBILE MENU â”€â”€
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // â”€â”€ SCROLL REVEAL (IN AND OUT) â”€â”€
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      } else {
+        // Remove class when scrolling out of view, so it animate out again
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, { 
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.scroll-reveal-card').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // â”€â”€ OTHER SCROLL REVEALS â”€â”€
+  const generalObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.testimonial-card, .landmark-slide').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    generalObserver.observe(el);
+  });
+
+  // â”€â”€ AMENITIES ACCORDION â”€â”€
+  const accordionHeader = document.getElementById('amenitiesAccordionHeader');
+  const accordionPanel = document.getElementById('amenitiesAccordionPanel');
+  const accordionIcon = document.getElementById('accordionIcon');
+
+  if (accordionHeader && accordionPanel && accordionIcon) {
+    accordionHeader.addEventListener('click', () => {
+      const isOpen = accordionPanel.classList.toggle('open');
+      if (isOpen) {
+        accordionIcon.textContent = '-';
+        accordionPanel.style.maxHeight = accordionPanel.scrollHeight + 'px';
+      } else {
+        accordionIcon.textContent = '+';
+        accordionPanel.style.maxHeight = '0';
+      }
+    });
+  }
+</script>
+
+<script src="theme.js"></script>
+
+<!-- FLOATING CALL & MAP BUTTONS -->
+<a href="https://wa.me/919960013388?text=Hello%20Hotel%20City%20Park%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" rel="noopener" class="floating-call-btn" aria-label="Chat on WhatsApp" style="background:#25D366">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<a href="https://maps.app.goo.gl/NY7Gox9tMCJ6neS7A" target="_blank" rel="noopener" class="floating-map-btn" aria-label="Open Google Maps Location">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  </svg>
+</a>
+
+<!-- Supabase dynamic gallery + rooms loader -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function() {
+  const _sb = supabase.createClient(
+    'https://szjwhimdvugqdlotxmwe.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6andoaW1kdnVncWRsb3R4bXdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDQwODUsImV4cCI6MjA5ODgyMDA4NX0.mxrtIFySdhHlzTZGdoA5PNIznQSJCKY6ojCyWmzoIno'
+  );
+
+  const sparkle = `<div class="video-room-sparkle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/></svg></div>`;
+
+  // â”€â”€ Fallback room cards (shown if Supabase has no data yet) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const FALLBACK_ROOMS = [
+    { name:'Executive Room', img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80' },
+    { name:'Deluxe Room',    img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80' },
+    { name:'Studio Room',   img:'https://images.unsplash.com/photo-1631049552057-403cdb8f0658?w=800&q=80' },
+    { name:'Suite Room',    img:'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80' },
+  ];
+
+  function getFirstImage(imgStr) {
+    if (!imgStr) return 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80';
+    if (typeof imgStr === 'string' && imgStr.trim().startsWith('[') && imgStr.trim().endsWith(']')) {
+      try {
+        const arr = JSON.parse(imgStr);
+        return arr[0] || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80';
+      } catch (e) {
+        console.warn("Error parsing image JSON on home page", e);
+      }
+    }
+    return imgStr;
+  }
+
+  // â”€â”€ Fallback gallery items â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const FALLBACK_GALLERY = [
+    { url:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=80', caption:'Hotel Exterior' },
+    { url:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80', caption:'Deluxe Room' },
+    { url:'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=900&q=80', caption:'Rooftop Pool' },
+    { url:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80', caption:'Restaurant' },
+    { url:'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=900&q=80', caption:'Conference Centre' },
+    { url:'https://images.unsplash.com/photo-1615460549969-36fa19521a4f?w=900&q=80', caption:'Wellness Spa' },
+    { url:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900&q=80', caption:'Premium Suite' },
+  ];
+
+  function renderRoomCards(roomsArr) {
+    const grid = document.getElementById('homeRoomsGrid');
+    if (!grid) return;
+    grid.innerHTML = roomsArr.map(r => `
+      <div class="video-room-card" onclick="window.location.href='rooms.html'" style="cursor:pointer">
+        <div class="video-room-card-inner" style="background-image:url('${getFirstImage(r.img)}');">
+          <div class="video-room-vertical-text">${r.name}</div>
+          ${sparkle}
+        </div>
+      </div>`).join('');
+    // Re-observe new cards with the scroll-reveal observer (defined in main script)
+    if (typeof revealObserver !== 'undefined') {
+      grid.querySelectorAll('.video-room-card').forEach(el => {
+        el.classList.add('scroll-reveal-card');
+        revealObserver.observe(el);
+      });
+    }
+  }
+
+  function renderGalleryItems(items) {
+    const track = document.getElementById('galleryTrack');
+    if (!track) return;
+    track.innerHTML = items.map(g => `
+      <div class="gal-item">
+        <img src="${g.url}" alt="${g.caption}" loading="lazy">
+        <div class="gal-caption">${g.caption}</div>
+      </div>`).join('');
+  }
+
+  // â”€â”€ Load Rooms from Supabase, fallback to hardcoded â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function loadRooms() {
+    try {
+      const { data, error } = await _sb
+        .from('rooms').select('*').eq('status','Available')
+        .order('id',{ascending:true}).limit(4);
+      if (!error && data?.length) {
+        renderRoomCards(data);
+      } else {
+        renderRoomCards(FALLBACK_ROOMS); // table not created yet or empty
+      }
+    } catch (e) {
+      renderRoomCards(FALLBACK_ROOMS); // any network error â†’ show fallback
+    }
+  }
+
+  // â”€â”€ Load Gallery from Supabase, fallback to hardcoded â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function loadGallery() {
+    try {
+      const { data, error } = await _sb
+        .from('gallery').select('*').order('created_at',{ascending:false});
+      if (!error && data?.length) {
+        renderGalleryItems(data);
+      } else {
+        renderGalleryItems(FALLBACK_GALLERY);
+      }
+    } catch (e) {
+      renderGalleryItems(FALLBACK_GALLERY);
+    }
+  }
+
+  // â”€â”€ Fallback banquets (shown if Supabase has no data yet) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const FALLBACK_BANQUETS = [
+    { name: 'JASHN', type: 'Meeting Hall', capacity: 35, description: 'Ideal for corporate meets & seminars', features: ['JASHN Meeting Hall — 35 pax capacity', 'Full WiFi access & audiovisual support'], img: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80' },
+    { name: 'SHAMIYANA', type: 'Banquet Hall', capacity: 125, description: 'Weddings, receptions & grand events', features: ['SHAMIYANA Banquet Hall — 125 pax capacity', 'On-site secure parking & event support'], img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80' }
+  ];
+
+  function renderBanquets(banquetsArr) {
+    const section = document.querySelector('#conference .conference-layout');
+    if (!section) return;
+
+    const mainImg = getFirstImage(banquetsArr[0]?.img) || 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=900&q=80';
+
+    const cardsHTML = banquetsArr.slice(0, 2).map(b => `
+      <div class="conf-card">
+        <h4>${b.name} — ${b.type}</h4>
+        <p>Capacity: up to ${b.capacity} guests<br>${b.description || ''}</p>
+      </div>
+    `).join('');
+
+    let featuresHTML = '';
+    banquetsArr.forEach(b => {
+      const feats = Array.isArray(b.features) ? b.features : (b.features ? String(b.features).split(',').map(x=>x.trim()) : []);
+      feats.forEach(f => {
+        featuresHTML += `<li>${f}</li>`;
+      });
+    });
+
+    if (!featuresHTML) {
+      featuresHTML = `
+        <li>JASHN Meeting Hall — 35 pax capacity</li>
+        <li>SHAMIYANA Banquet Hall — 125 pax capacity</li>
+        <li>Full WiFi access & audiovisual support</li>
+        <li>On-site secure parking & event support</li>
+      `;
+    }
+
+    section.innerHTML = `
+      <div class="conf-image-wrap">
+        <img src="${mainImg}" alt="Conference Venue" loading="lazy">
+        <div class="conf-cards">${cardsHTML}</div>
+      </div>
+      <div>
+        <p class="sec-desc">Hotel City Park offers dedicated event spaces in the heart of Solapur — perfect for corporate meetings, seminars, weddings and social celebrations. Customised catering and full event support included.</p>
+        <ul class="conf-features" style="margin-bottom: 32px;">
+          ${featuresHTML}
+        </ul>
+        <a href="halls.html" class="btn-primary" id="exploreVenuesBtn">Explore Event Spaces</a>
+      </div>
+    `;
+  }
+
+  async function loadBanquets() {
+    try {
+      const { data, error } = await _sb
+        .from('banquets').select('*').order('id',{ascending:true});
+      if (!error && data?.length) {
+        renderBanquets(data);
+      } else {
+        renderBanquets(FALLBACK_BANQUETS);
+      }
+    } catch (e) {
+      renderBanquets(FALLBACK_BANQUETS);
+    }
+  }
+
+  // Run all in parallel
+  await Promise.all([loadRooms(), loadGallery(), loadBanquets()]);
+})();
+
+</script>
+
+<!-- PWA Service Worker only (no install banner) -->
+<script>
+(function() {
+  if (location.protocol === 'file:') return;
+
+  // Inject manifest link dynamically
+  if (!document.querySelector('link[rel="manifest"]')) {
+    const lnk = document.createElement('link');
+    lnk.rel = 'manifest';
+    lnk.href = './manifest.json';
+    document.head.appendChild(lnk);
+  }
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .then(reg => console.log('[CityPark] SW registered:', reg.scope))
+        .catch(err => console.warn('[CityPark] SW registration failed:', err));
+    });
+  }
+
+  // Suppress install prompt — no install banner on customer site
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+  });
+})();
+</script>
+
+</body>
+</html>

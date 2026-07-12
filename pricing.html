@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing & Room Tariff Guide — Hotel City Park, Solapur</title>
+<meta name="description" content="View the seasonal tariff table for Executive, Deluxe, Suite, and Penthouse rooms at Hotel City Park, Solapur. Review booking policies and taxes.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#9B3A6A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="City Park">
+<link rel="apple-touch-icon" href="logo.png">
+<script>
+  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      const hour = new Date().getHours();
+      const isNight = hour >= 19 || hour < 5;
+      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    }
+  })();
+</script>
+</head>
+<body class="subpage-body">
+
+<!-- NAVBAR -->
+<nav id="navbar" class="nav-subpage">
+  <a href="index.html" class="nav-logo" id="logoLink">
+    <span class="name">City Park</span>
+    <span class="tag">by JMG Hospitality & Infra · Solapur</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" id="navHome">Home</a></li>
+    <li><a href="rooms.html" id="navRooms">Rooms</a></li>
+    <li><a href="halls.html" id="navHalls">Halls</a></li>
+    <li><a href="dining.html" id="navDining">Dining</a></li>
+    <li><a href="pricing.html" id="navPricing" style="color: var(--gold);">Pricing</a></li>
+    <li><a href="contact.html" id="navContact">Contact</a></li>
+  </ul>
+  <div style="display: flex; align-items: center;">
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <a href="booking.html" class="nav-book" id="navBookBtn">Book Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mob-back" onclick="toggleMobileMenu()" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+  </button>
+  <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+  <a href="rooms.html" onclick="toggleMobileMenu()">Rooms</a>
+  <a href="halls.html" onclick="toggleMobileMenu()">Halls & Banquets</a>
+  <a href="rooms.html#amenities" onclick="toggleMobileMenu()">Amenities</a>
+  <a href="dining.html" onclick="toggleMobileMenu()">Dining</a>
+
+  <a href="contact.html" onclick="toggleMobileMenu()">Contact Info</a>
+  <a href="booking.html" onclick="toggleMobileMenu();" style="color:var(--gold)">Book Now</a>
+  
+  <button id="mobileThemeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin: 24px auto 0; border: 1px solid var(--border-color); color: var(--text-primary);">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- SUBPAGE HERO -->
+<section class="subpage-hero" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=80');">
+  <div class="subpage-hero-content">
+    <p class="hero-eyebrow">Tariff Guide</p>
+    <h1 class="hero-title">Pricing & <em>Tariffs</em></h1>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="section" id="pricing-details">
+  <div class="section-inner">
+    <p class="sec-label">Seasonal Rates</p>
+    <h2 class="sec-title">Room Tariff & <em>Pricing Guide</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-desc">Choose from our selection of premium suites and rooms in Solapur. Check-in & checkout is operational 24 Hours for your convenience, allowing you to check in or out at any time. Government taxes are applicable extra.</p>
+    
+    <div style="overflow-x:auto; margin-top: 48px; border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 12px 48px rgba(13,27,42,0.04);" class="pricing-table-wrap">
+      <table style="width:100%; border-collapse:collapse; font-family:'Jost',sans-serif; background: white;">
+        <thead>
+          <tr style="background:var(--navy); color:white;">
+            <th style="padding:20px 24px; text-align:left; font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500;">Room Type</th>
+            <th style="padding:20px 24px; text-align:center; font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500;">Single</th>
+            <th style="padding:20px 24px; text-align:center; font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500;">Double</th>
+            <th style="padding:20px 24px; text-align:center; font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500;">Triple</th>
+            <th style="padding:20px 24px; text-align:center; font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500;">Extra Pax</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border); background:white;">
+            <td style="padding:20px 24px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--navy); font-weight:600;">Executive Room</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹2,400</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹2,700</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹3,300</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹600</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border); background:var(--cream2);">
+            <td style="padding:20px 24px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--navy); font-weight:600;">Deluxe Room</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹2,700</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹3,000</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹3,600</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹600</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border); background:white;">
+            <td style="padding:20px 24px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--navy); font-weight:600;">Suite Room</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹3,900</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹4,500</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹5,100</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹600</td>
+          </tr>
+          <tr style="background:var(--cream2);">
+            <td style="padding:20px 24px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--navy); font-weight:600;">Pent House</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--muted); font-style: italic;">—</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹6,000</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--muted); font-style: italic;">—</td>
+            <td style="padding:20px 24px; text-align:center; font-size:1.05rem; color:var(--navy);">₹600</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 16px; font-size: 0.85rem; color: var(--muted); font-style: italic;">
+      * Tariff rates listed above are base fares.
+    </div>
+
+    <div style="text-align: center; margin-top: 56px;">
+      <a href="booking.html" class="btn-primary" id="bookNowFromPricingBtn">Book Your Stay Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- GENERAL POLICIES -->
+<section class="section" style="background: var(--cream);">
+  <div class="section-inner" style="max-width: 800px;">
+    <p class="sec-label">Terms & Rules</p>
+    <h2 class="sec-title">Hotel <em>Policies</em></h2>
+    <div class="sec-divider"></div>
+    
+    <div style="display: flex; flex-direction: column; gap: 24px; font-size: 0.95rem; line-height: 1.8; color: var(--text);">
+      <div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--navy); margin-bottom: 8px;">1. Check-In & Check-Out timings</h4>
+        <p>We operate on a 24-hour check-in and check-out system. Guests are welcome to check in or check out at any time. Please notify the front desk of your estimated arrival and departure times for smooth coordination.</p>
+      </div>
+      <div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--navy); margin-bottom: 8px;">2. Child Policy</h4>
+        <p>Children below 6 years can stay complimentary sharing parent's existing bedding. Children aged 6-12 years will be charged at child rates. Anyone above 12 years is treated as an adult occupancy and requires an extra bed arrangement (₹600/night + taxes).</p>
+      </div>
+      <div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--navy); margin-bottom: 8px;">3. Cancellation and No-Show policy</h4>
+        <p>Cancellations made 24 hours prior to check-in date will receive a 100% refund. Cancellations processed within 24 hours of arrival or no-show bookings are non-refundable and will attract a charge equal to the first night's room rate.</p>
+      </div>
+      <div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--navy); margin-bottom: 8px;">4. Identity Verification</h4>
+        <p>According to government regulations, all guests aged 18 and above must present a valid government-issued photo ID (Aadhaar, Passport, Driving License, Voter ID) upon check-in. PAN cards are not accepted as valid address proofs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-row-main">
+      <!-- Logo Column -->
+      <div class="footer-brand-col">
+        <img src="logo.png" alt="Hotel City Park Logo" class="footer-logo-img">
+        <span class="footer-logo-name">City Park</span>
+        <span class="footer-logo-tag">SOLAPUR</span>
+      </div>
+      
+      <!-- Address Column -->
+      <div class="footer-info-col">
+        <h3>Address</h3>
+        <p>119, Murarji Peth,<br>Near Park Chowk,<br>Solapur, Maharashtra, 413001.</p>
+      </div>
+      
+      <!-- Contact Column -->
+      <div class="footer-info-col">
+        <h3>Contact</h3>
+        <p>
+          <a href="tel:02172729791">0217-2729791 / 92 / 93</a><br>
+          <a href="tel:+919960013388">+91 9960013388</a><br>
+          <a href="mailto:hcitypark@rediffmail.com">hcitypark@rediffmail.com</a>
+        </p>
+      </div>
+      
+      <!-- Right/Social Column -->
+      <div class="footer-right-col">
+        <div class="footer-social-icons">
+          <a href="https://www.instagram.com/hotelcityparksolapur?igsh=MXNwM3JnaHRsOGc4cQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        </div>
+        <div class="footer-copyright">
+          © 2026 | Hotel City Park.<br>
+          <span style="font-size: 0.72rem; color: var(--muted); font-weight: 500;">by JMG Hospitality & Infra</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Strip -->
+  <div class="footer-strip">
+    <div class="footer-strip-links">
+      <a href="#">Privacy Policy</a> | 
+      <a href="pricing.html#pricing-details">Cancellation Policy</a> | 
+      <a href="#">Terms & Conditions</a> | 
+      <a href="#">Cookie Policy</a> | 
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // â”€â”€ MOBILE MENU â”€â”€
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // â”€â”€ SCROLL REVEAL â”€â”€
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.pricing-table-wrap, .hours-block').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+<script src="theme.js"></script>
+
+<!-- FLOATING CALL & MAP BUTTONS -->
+<a href="https://wa.me/919960013388?text=Hello%20Hotel%20City%20Park%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" rel="noopener" class="floating-call-btn" aria-label="Chat on WhatsApp" style="background:#25D366">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<a href="https://maps.app.goo.gl/NY7Gox9tMCJ6neS7A" target="_blank" rel="noopener" class="floating-map-btn" aria-label="Open Google Maps Location">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  </svg>
+</a>
+
+<script>
+(function() {
+  if (location.protocol === 'file:') return;
+  if (!document.querySelector('link[rel="manifest"]')) { const lnk = document.createElement('link'); lnk.rel = 'manifest'; lnk.href = './manifest.json'; document.head.appendChild(lnk); }
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .catch(err => console.warn('[CityPark] SW:', err));
+    });
+  }
+})();
+</script>
+</body>
+</html>
+
+
+
+

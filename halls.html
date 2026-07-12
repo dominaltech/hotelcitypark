@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banquet Halls & Event Venues — Hotel City Park, Solapur</title>
+<meta name="description" content="Host corporate meetings, conferences, weddings, and celebrations at Hotel City Park, Solapur. Explore Jashn boardroom and Shamiyana banquet capacities and prices.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#9B3A6A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="City Park">
+<link rel="apple-touch-icon" href="logo.png">
+<script>
+  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      const hour = new Date().getHours();
+      const isNight = hour >= 19 || hour < 5;
+      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    }
+  })();
+</script>
+</head>
+<body class="subpage-body">
+
+<!-- NAVBAR -->
+<nav id="navbar" class="nav-subpage">
+  <a href="index.html" class="nav-logo" id="logoLink">
+    <span class="name">City Park</span>
+    <span class="tag">by JMG Hospitality & Infra · Solapur</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" id="navHome">Home</a></li>
+    <li><a href="rooms.html" id="navRooms">Rooms</a></li>
+    <li><a href="halls.html" id="navHalls" style="color: var(--gold);">Halls</a></li>
+    <li><a href="dining.html" id="navDining">Dining</a></li>
+    <li><a href="pricing.html" id="navPricing">Pricing</a></li>
+    <li><a href="contact.html" id="navContact">Contact</a></li>
+  </ul>
+  <div style="display: flex; align-items: center;">
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <a href="booking.html" class="nav-book" id="navBookBtn">Book Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mob-back" onclick="toggleMobileMenu()" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+  </button>
+  <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+  <a href="rooms.html" onclick="toggleMobileMenu()">Rooms</a>
+  <a href="halls.html" onclick="toggleMobileMenu()" style="color:var(--gold)">Halls & Banquets</a>
+  <a href="rooms.html#amenities" onclick="toggleMobileMenu()">Amenities</a>
+  <a href="dining.html" onclick="toggleMobileMenu()">Dining</a>
+  <a href="contact.html" onclick="toggleMobileMenu()">Contact Info</a>
+  <a href="booking.html" onclick="toggleMobileMenu();" style="color:var(--gold)">Book Now</a>
+  
+  <button id="mobileThemeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin: 24px auto 0; border: 1px solid var(--border-color); color: var(--text-primary);">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- SUBPAGE HERO -->
+<section class="subpage-hero" style="background-image: url('https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1800&q=80');">
+  <div class="subpage-hero-content">
+    <p class="hero-eyebrow">Exquisite Venues</p>
+    <h1 class="hero-title">Banquets & <em>Halls</em></h1>
+  </div>
+</section>
+
+<!-- HALLS -->
+<section class="section" id="halls-list">
+  <div class="section-inner">
+    <p class="sec-label">Event Spaces</p>
+    <h2 class="sec-title">Conference & <em>Banquets</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-desc">Elevate your corporate meets, product launches, family celebrations and grand weddings. Choose from Solapur's premier boardrooms and halls with professional catering and AV support.</p>
+
+    <!-- Custom CSS for Hall cards page -->
+    <style>
+      .halls-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        margin-top: 48px;
+      }
+      @media (max-width: 768px) {
+        .halls-container {
+          grid-template-columns: 1fr;
+        }
+      }
+      .hall-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      }
+      .hall-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 36px rgba(13,27,42,0.06);
+      }
+      .hall-img-wrap {
+        height: 260px;
+        overflow: hidden;
+        position: relative;
+      }
+      .hall-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+      .hall-card:hover .hall-img-wrap img {
+        transform: scale(1.04);
+      }
+      .hall-card-body {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .hall-card-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        color: var(--navy-light, #2B3A67);
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .hall-type-tag {
+        font-family: 'Jost', sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-weight: 600;
+        background: rgba(201,169,110,0.08);
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid rgba(201,169,110,0.2);
+      }
+      .hall-card-meta {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .hall-card-desc {
+        font-size: 0.92rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .hall-card-features {
+        margin-bottom: 24px;
+        padding-left: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      .hall-card-features li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .hall-card-features li::before {
+        content: "✦";
+        color: var(--gold);
+      }
+      .hall-card-footer {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+        gap: 16px;
+      }
+      .hall-price-label {
+        display: flex;
+        flex-direction: column;
+      }
+      .hall-price-label .title {
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .hall-price-label .amount {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.65rem;
+        color: var(--navy-light, #2B3A67);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .hall-price-label .suffix {
+        font-size: 0.74rem;
+        color: var(--muted);
+      }
+      .hall-book-btn {
+        padding: 10px 22px;
+        font-family: 'Jost', sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 600;
+        background: var(--gold);
+        color: var(--bg-primary);
+        text-decoration: none;
+        border-radius: 4px;
+        transition: 0.2s;
+        text-align: center;
+      }
+      .hall-book-btn:hover {
+        background: var(--gold-light);
+        transform: translateY(-1px);
+      }
+    </style>
+
+    <div class="halls-container" id="hallsPageGrid">
+      <!-- Banquet Halls will load dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-row-main">
+      <!-- Logo Column -->
+      <div class="footer-brand-col">
+        <img src="logo.png" alt="Hotel City Park Logo" class="footer-logo-img">
+        <span class="footer-logo-name">City Park</span>
+        <span class="footer-logo-tag">SOLAPUR</span>
+      </div>
+      
+      <!-- Address Column -->
+      <div class="footer-info-col">
+        <h3>Address</h3>
+        <p>119, Murarji Peth,<br>Near Park Chowk,<br>Solapur, Maharashtra, 413001.</p>
+      </div>
+      
+      <!-- Contact Column -->
+      <div class="footer-info-col">
+        <h3>Contact</h3>
+        <p>
+          <a href="tel:02172729791">0217-2729791 / 92 / 93</a><br>
+          <a href="tel:+919960013388">+91 9960013388</a><br>
+          <a href="mailto:hcitypark@rediffmail.com">hcitypark@rediffmail.com</a>
+        </p>
+      </div>
+      
+      <!-- Right/Social Column -->
+      <div class="footer-right-col">
+        <div class="footer-social-icons">
+          <a href="https://www.instagram.com/hotelcityparksolapur?igsh=MXNwM3JnaHRsOGc4cQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        </div>
+        <div class="footer-copyright">
+          © 2026 | Hotel City Park.<br>
+          <span style="font-size: 0.72rem; color: var(--muted); font-weight: 500;">by JMG Hospitality & Infra</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Strip -->
+  <div class="footer-strip">
+    <div class="footer-strip-links">
+      <a href="#">Privacy Policy</a> | 
+      <a href="pricing.html#pricing-details">Cancellation Policy</a> | 
+      <a href="#">Terms & Conditions</a> | 
+      <a href="#">Cookie Policy</a> | 
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile Menu toggle
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function() {
+  const _sb = supabase.createClient(
+    'https://szjwhimdvugqdlotxmwe.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6andoaW1kdnVncWRsb3R4bXdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDQwODUsImV4cCI6MjA5ODgyMDA4NX0.mxrtIFySdhHlzTZGdoA5PNIznQSJCKY6ojCyWmzoIno'
+  );
+
+  // Fallback banquets (if database load fails)
+  const FALLBACK = [
+    { name: 'JASHN', type: 'Meeting Hall', capacity: 35, description: 'Ideal for corporate meets, board meetings, and mini seminars.', features: ['Meeting Hall configuration', 'Complimentary WiFi access', 'Audiovisual setup support'], img: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80', price: 10000 },
+    { name: 'SHAMIYANA', type: 'Banquet Hall', capacity: 125, description: 'Weddings, receptions, anniversary celebrations, and grand dinners.', features: ['Banquet arrangement', 'On-site secure parking', 'Stage setup support'], img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80', price: 25000 }
+  ];
+
+  window.parseImages = function(imgStr) {
+    if (!imgStr) return [];
+    if (typeof imgStr === 'string' && imgStr.trim().startsWith('[') && imgStr.trim().endsWith(']')) {
+      try {
+        return JSON.parse(imgStr);
+      } catch (e) {
+        console.warn("Error parsing image JSON", e);
+      }
+    }
+    if (typeof imgStr === 'string') {
+      return [imgStr];
+    }
+    if (Array.isArray(imgStr)) {
+      return imgStr;
+    }
+    return [];
+  };
+
+  window.handleSliderTouchStart = function(event) {
+    const slider = event.currentTarget;
+    const touch = event.touches[0];
+    slider.dataset.startX = touch.clientX;
+    slider.dataset.startY = touch.clientY;
+    slider.dataset.diffX = '0';
+  };
+
+  window.handleSliderTouchMove = function(event) {
+    const slider = event.currentTarget;
+    if (!slider.dataset.startX) return;
+    const touch = event.touches[0];
+    const diffX = touch.clientX - parseFloat(slider.dataset.startX);
+    const diffY = touch.clientY - parseFloat(slider.dataset.startY);
+    
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      event.preventDefault();
+    }
+    slider.dataset.diffX = diffX;
+  };
+
+  window.handleSliderTouchEnd = function(event) {
+    const slider = event.currentTarget;
+    const diffX = parseFloat(slider.dataset.diffX || '0');
+    const startX = slider.dataset.startX;
+    
+    delete slider.dataset.startX;
+    delete slider.dataset.startY;
+    delete slider.dataset.diffX;
+    
+    if (!startX) return;
+    
+    const threshold = 50;
+    if (diffX > threshold) {
+      window.slideRoomCard(event, slider.querySelector('.card-slider-track'), -1);
+    } else if (diffX < -threshold) {
+      window.slideRoomCard(event, slider.querySelector('.card-slider-track'), 1);
+    }
+  };
+
+  window.renderCardSlider = function(imgStr, altText) {
+    const images = window.parseImages(imgStr);
+    if (images.length === 0) {
+      return `<img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80" alt="${altText}" loading="lazy">`;
+    }
+    if (images.length === 1) {
+      return `<img src="${images[0]}" alt="${altText}" loading="lazy">`;
+    }
+    
+    const slides = images.map(url => `<img src="${url}" alt="${altText}" loading="lazy">`).join('');
+    const dots = images.map((_, idx) => `<span class="card-slider-dot ${idx === 0 ? 'active' : ''}" onclick="event.stopPropagation(); window.slideRoomCardTo(event, this, ${idx})"></span>`).join('');
+    
+    return `
+      <div class="card-slider" data-active-index="0" style="height: 100%;"
+           ontouchstart="window.handleSliderTouchStart(event)"
+           ontouchmove="window.handleSliderTouchMove(event)"
+           ontouchend="window.handleSliderTouchEnd(event)">
+        <div class="card-slider-track">
+          ${slides}
+        </div>
+        <button type="button" class="card-slider-btn prev" onclick="window.slideRoomCard(event, this, -1)">&#10094;</button>
+        <button type="button" class="card-slider-btn next" onclick="window.slideRoomCard(event, this, 1)">&#10095;</button>
+        <div class="card-slider-dots">
+          ${dots}
+        </div>
+      </div>
+    `;
+  };
+
+  window.slideRoomCard = function(event, btn, direction) {
+    if (event && typeof event.stopPropagation === 'function') {
+      event.stopPropagation();
+    }
+    if (!btn) return;
+    const slider = btn.closest('.card-slider');
+    if (!slider) return;
+    const track = slider.querySelector('.card-slider-track');
+    if (!track) return;
+    const slides = track.querySelectorAll('img');
+    const dots = slider.querySelectorAll('.card-slider-dot');
+    let activeIndex = parseInt(slider.dataset.activeIndex || '0');
+    
+    activeIndex += direction;
+    if (activeIndex < 0) activeIndex = slides.length - 1;
+    if (activeIndex >= slides.length) activeIndex = 0;
+    
+    slider.dataset.activeIndex = activeIndex;
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === activeIndex);
+    });
+  };
+
+  window.slideRoomCardTo = function(event, dot, index) {
+    if (event && typeof event.stopPropagation === 'function') {
+      event.stopPropagation();
+    }
+    if (!dot) return;
+    const slider = dot.closest('.card-slider');
+    if (!slider) return;
+    const track = slider.querySelector('.card-slider-track');
+    if (!track) return;
+    const dots = slider.querySelectorAll('.card-slider-dot');
+    
+    slider.dataset.activeIndex = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === index);
+    });
+  };
+
+  function buildHallCards(halls) {
+    return halls.map(h => {
+      const nameEscaped = encodeURIComponent(h.name);
+      const capacityText = `up to ${h.capacity} guests`;
+      const priceText = h.price ? `₹${Number(h.price).toLocaleString('en-IN')}` : 'Contact Us';
+      const suffixText = h.price ? ' / event' : '';
+      
+      const feats = Array.isArray(h.features) ? h.features : (h.features ? String(h.features).split(',').map(x=>x.trim()) : []);
+      const featsHTML = feats.map(f => `<li>${f}</li>`).join('');
+
+      return `
+      <div class="hall-card">
+        <div class="hall-img-wrap">
+          ${window.renderCardSlider(h.img, h.name)}
+        </div>
+        <div class="hall-card-body">
+          <div class="hall-card-title">
+            <span>${h.name}</span>
+            <span class="hall-type-tag">${h.type || 'Banquet'}</span>
+          </div>
+          <div class="hall-card-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Capacity: <strong>${capacityText}</strong></span>
+          </div>
+          <div class="hall-card-desc">${h.description || ''}</div>
+          <ul class="hall-card-features">
+            ${featsHTML}
+          </ul>
+          <div class="hall-card-footer">
+            <div class="hall-price-label">
+              <span class="title">Tariff</span>
+              <span class="amount">${priceText}</span>
+              ${suffixText ? `<span class="suffix">${suffixText}</span>` : ''}
+            </div>
+            <a href="booking.html?type=events&room=${nameEscaped}" class="hall-book-btn">Book Hall</a>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  const grid = document.getElementById('hallsPageGrid');
+  if (!grid) return;
+
+  try {
+    const { data, error } = await _sb
+      .from('banquets').select('*').order('id', { ascending: true });
+    const banquets = (!error && data?.length) ? data : FALLBACK;
+    grid.innerHTML = buildHallCards(banquets);
+  } catch(e) {
+    grid.innerHTML = buildHallCards(FALLBACK);
+  }
+
+  // Scroll Reveal Animation
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  grid.querySelectorAll('.hall-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+})();
+</script>
+<script src="theme.js"></script>
+</body>
+</html>
