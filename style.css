@@ -167,6 +167,15 @@ body.subpage-body {
   width: 90%;
   max-width: 480px;
 }
+.preloader-logo {
+  width: 90px;
+  height: auto;
+  margin: 0 auto 16px;
+  display: block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: preloaderTextIn 0.8s ease forwards;
+}
 .preloader-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.2rem;
@@ -1727,6 +1736,8 @@ footer {
 }
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
+  .nav-logo .tag { font-size: 7px; }
+  .hero-desktop-branding { display: none !important; }
   .nav-links, .nav-book { display: none; }
   .hamburger { display: flex; }
   .section { padding: 64px 20px; }
@@ -2184,18 +2195,19 @@ footer .footer-strip-links a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  transition: background 0.2s, opacity 0.2s, transform 0.2s;
+  font-size: 14px;
   z-index: 10;
-  opacity: 0; /* hidden by default, shown on hover */
-  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 .card-slider:hover .card-slider-btn {
   opacity: 1;
 }
 .card-slider-btn:hover {
   background: var(--gold);
-  transform: translateY(-50%) scale(1.1);
+  color: var(--bg-primary);
+  transform: translateY(-50%) scale(1.08);
 }
 .card-slider-btn.prev {
   left: 12px;

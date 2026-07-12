@@ -491,7 +491,7 @@
       
       const feats = Array.isArray(h.features) ? h.features : (h.features ? String(h.features).split(',').map(x=>x.trim()) : []);
       const featsHTML = feats.map(f => `<li>${f}</li>`).join('');
-
+      
       return `
       <div class="hall-card">
         <div class="hall-img-wrap">
