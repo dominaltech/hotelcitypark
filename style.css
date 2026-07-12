@@ -13,7 +13,7 @@
   
   --border-color: rgba(199, 163, 184, 0.35);
   --shadow: rgba(60, 42, 53, 0.06);
-  --nav-bg: rgba(255, 255, 255, 0.96);
+  --nav-bg: rgba(255, 255, 255, 0.75);
   --footer-bg: #ffffff;
   
   /* Button Variables */
@@ -50,7 +50,7 @@
   
   --border-color: rgba(255, 255, 255, 0.15);
   --shadow: rgba(0, 0, 0, 0.3);
-  --nav-bg: rgba(26, 21, 32, 0.96);
+  --nav-bg: rgba(26, 21, 32, 0.7);
   --footer-bg: #15111A;
   
   /* Legacy variables mappings for compatibility in dark mode */
@@ -219,20 +219,12 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 48px;
   height: 72px;
-  background: transparent;
-  transition: background 0.4s, box-shadow 0.4s;
-}
-nav.scrolled {
   background: var(--nav-bg);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 4px 32px var(--shadow);
-}
-nav.nav-subpage {
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 32px var(--shadow);
+  transition: background 0.4s, box-shadow 0.4s, border-color 0.4s;
 }
 .nav-logo {
   display: flex; flex-direction: column; align-items: flex-start;
@@ -245,7 +237,7 @@ nav.nav-subpage {
   text-transform: uppercase;
 }
 .nav-logo .tag {
-  font-size: 0.62rem; letter-spacing: 0.35em; color: var(--gold);
+  font-size: 0.85rem; letter-spacing: 0.22em; color: var(--gold);
   text-transform: uppercase; margin-top: 2px;
 }
 .nav-links {
@@ -1736,7 +1728,7 @@ footer {
 }
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
-  .nav-logo .tag { font-size: 7px; }
+  .nav-logo .tag { font-size: 11px; letter-spacing: 0.18em; }
   .hero-desktop-branding { display: none !important; }
   .nav-links, .nav-book { display: none; }
   .hamburger { display: flex; }
