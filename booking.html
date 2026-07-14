@@ -117,14 +117,27 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group" style="position: relative;">
             <label for="roomType">Room Type *</label>
-            <select id="roomType">
+            <select id="roomType" style="display: none;">
               <option value="Executive Room">Executive Room (From ₹2,400)</option>
               <option value="Deluxe Room">Deluxe Room (From ₹2,700)</option>
               <option value="Suite Room">Suite Room (From ₹3,900)</option>
               <option value="Pent House">Pent House (From ₹6,000)</option>
             </select>
+            
+            <div id="customRoomTypeSelect" class="custom-select-trigger" onclick="toggleCustomRoomDropdown(event)">
+              <div class="selected-option-content">
+                <span class="room-name-display" id="customSelectedRoomName">Executive Room</span>
+                <span class="room-price-display" id="customSelectedRoomPrice">From ₹2,400</span>
+              </div>
+              <div class="custom-select-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            
+            <div id="customRoomDropdown" class="custom-select-dropdown">
+            </div>
           </div>
           <div class="form-group">
             <label>Occupancy & Rooms *</label>
@@ -165,18 +178,19 @@
           <div class="price-summary-header">Price Estimate</div>
           <div class="price-summary-body">
             <div class="price-summary-line">
-              <span>Room Tariff (per person / night)</span>
+              <span id="rateLabel">Room Tariff (per person)</span>
               <span id="ratePerNight">—</span>
             </div>
-            <div class="price-summary-line">
+            <div class="price-summary-line" id="nightsRow">
               <span>Nights</span>
               <span id="numNights">—</span>
             </div>
             <div class="price-summary-divider"></div>
-            <div class="price-summary-line total">
+            <div class="price-summary-line total" style="margin-bottom: 4px;">
               <span>Total Estimated Price</span>
               <span id="totalTariff">—</span>
             </div>
+            <div style="font-size: 0.78rem; color: var(--gold); margin-top: 2px; text-align: right; font-weight: 500; letter-spacing: 0.02em; margin-bottom: 8px;">Govt. taxes applicable</div>
             <div class="price-info-note" id="priceInfoNote"></div>
           </div>
         </div>
@@ -192,10 +206,13 @@
           <div class="form-group">
             <label for="eventDuration">Duration *</label>
             <select id="eventDuration">
-              <option>Half Day</option>
-              <option selected>Full Day</option>
-              <option>Multi-Day</option>
+              <option value="Full Day" selected>Full Day</option>
+              <option value="Hourly">Hourly</option>
             </select>
+          </div>
+          <div class="form-group" id="eventHoursGroup" style="display: none;">
+            <label for="eventHours">Hours Required *</label>
+            <input type="number" id="eventHours" placeholder="e.g. 4" min="1" value="4">
           </div>
         </div>
 
@@ -212,6 +229,8 @@
             <input type="number" id="attendees" placeholder="e.g. 50" min="1">
           </div>
         </div>
+
+
 
         <div class="form-group">
           <label for="eventDetails">Event Requirements</label>
@@ -241,7 +260,7 @@
     <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);font-weight:400;margin-bottom:10px;letter-spacing:0.05em;">Request Received!</div>
     <div id="successInqNum" style="font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;"></div>
     <div style="font-family:'Jost',sans-serif;font-size:0.95rem;color:var(--text-primary);max-width:340px;line-height:1.7;margin:0 auto 32px;">Your reservation request has been submitted successfully.<br>Please note that your booking is only confirmed by the hotel's confirmation message.</div>
-    <div style="font-family:'Jost',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.4);">Redirecting to home in <span id="countdownSec">3</span>s...</div>
+    <div style="font-family:'Jost',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.4);">Redirecting to home in <span id="countdownSec">12</span>s...</div>
   </div>
 </div>
 <style>
@@ -303,10 +322,164 @@
 .custom-modal-btn.cancel:hover {
   border-color: var(--gold, #C7A3B8); color: var(--text-primary, #fff);
 }
+
+/* Custom Select styling to resolve browser select styling limitations */
+.custom-select-trigger {
+  padding: 13px 16px;
+  border: 1px solid var(--border-color, #ddd);
+  background: var(--bg-card, #ffffff);
+  color: var(--text-primary, #000000);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Jost', sans-serif;
+  user-select: none;
+  min-height: 52px;
+}
+.custom-select-trigger:focus-within {
+  border-color: var(--gold);
+}
+.selected-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.room-name-display {
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.room-price-display {
+  font-size: 0.76rem;
+  color: var(--gold);
+}
+.custom-select-arrow {
+  color: var(--text-secondary, #888);
+  display: flex;
+  align-items: center;
+}
+.custom-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, #ddd);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: none;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+.custom-select-dropdown.open {
+  display: block;
+}
+.custom-select-option {
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  transition: background 0.2s;
+  border-bottom: 1px solid var(--border-color, rgba(0,0,0,0.05));
+}
+.custom-select-option:last-child {
+  border-bottom: none;
+}
+.custom-select-option:hover {
+  background: var(--bg-secondary, rgba(0,0,0,0.02));
+}
+.custom-select-option .opt-room-name {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.custom-select-option .opt-room-price {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
 </style>
 
 <script>
   let bookingType = 'rooms';
+
+  // Custom select methods
+  window.toggleCustomRoomDropdown = function(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('customRoomDropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('open');
+    }
+  };
+
+  window.selectCustomRoomOption = function(roomName, startingPrice, idx) {
+    const select = document.getElementById('roomType');
+    if (!select) return;
+    select.selectedIndex = idx;
+    
+    document.getElementById('customSelectedRoomName').textContent = roomName;
+    document.getElementById('customSelectedRoomPrice').textContent = startingPrice;
+    
+    const dropdown = document.getElementById('customRoomDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+    
+    select.dispatchEvent(new Event('change'));
+  };
+
+  window.updateCustomRoomDropdown = function() {
+    const select = document.getElementById('roomType');
+    const customDropdown = document.getElementById('customRoomDropdown');
+    if (!select || !customDropdown) return;
+    
+    customDropdown.innerHTML = Array.from(select.options).map((opt, idx) => {
+      const roomName = opt.value;
+      const optionText = opt.textContent;
+      
+      let startingPrice = '';
+      const match = optionText.match(/\(From ₹([0-9,]+)\)/);
+      if (match) {
+        startingPrice = `From ₹${match[1]}`;
+      } else {
+        const rates = roomRates[roomName];
+        if (rates && rates[1]) {
+          startingPrice = `From ₹${rates[1].toLocaleString('en-IN')}`;
+        }
+      }
+      
+      return `
+        <div class="custom-select-option" onclick="selectCustomRoomOption('${roomName}', '${startingPrice}', ${idx})">
+          <span class="opt-room-name">${roomName}</span>
+          ${startingPrice ? `<span class="opt-room-price">${startingPrice}</span>` : ''}
+        </div>
+      `;
+    }).join('');
+    
+    const selectedIdx = select.selectedIndex >= 0 ? select.selectedIndex : 0;
+    const selectedOpt = select.options[selectedIdx];
+    if (selectedOpt) {
+      const roomName = selectedOpt.value;
+      let startingPrice = '';
+      const match = selectedOpt.textContent.match(/\(From ₹([0-9,]+)\)/);
+      if (match) {
+        startingPrice = `From ₹${match[1]}`;
+      }
+      
+      document.getElementById('customSelectedRoomName').textContent = roomName;
+      document.getElementById('customSelectedRoomPrice').textContent = startingPrice;
+    }
+  };
+
+  // Close custom dropdown on click outside
+  document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('customRoomDropdown');
+    const trigger = document.getElementById('customRoomTypeSelect');
+    if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
+      dropdown.classList.remove('open');
+    }
+  });
 
   // Room Rate Table matching user specifications
   const roomRates = {
@@ -334,6 +507,8 @@
       extra: 600 // Triple is not available, falls back to Double + extra person
     }
   };
+
+  const banquetRates = {};
 
   // Set default dates
   const today = new Date();
@@ -376,6 +551,12 @@
       if (!banquetsErr && banquets && banquets.length) {
         const select = document.getElementById('hallType');
         select.innerHTML = banquets.map(b => `<option value="${b.name}">${b.name} — ${b.type} (up to ${b.capacity} pax)</option>`).join('');
+        banquets.forEach(b => {
+          banquetRates[b.name] = {
+            price: Number(b.price) || 0,
+            price_per_hour: Number(b.price_per_hour) || 0
+          };
+        });
       }
     } catch(e) {
       console.warn('Error loading dynamic dropdowns:', e);
@@ -411,6 +592,9 @@
         }
       }
     }
+    
+    // Call custom dropdown sync at the end of load
+    updateCustomRoomDropdown();
   })();
 
   function setBookingType(type) {
@@ -431,6 +615,8 @@
       btnEvents.classList.remove('active');
       roomsFields.style.display = 'block';
       eventsFields.style.display = 'none';
+      const infoBox = document.getElementById('roomSelectionInfo');
+      if (infoBox) infoBox.style.display = 'block';
 
       checkin.setAttribute('required', '');
       checkout.setAttribute('required', '');
@@ -443,6 +629,8 @@
       btnEvents.classList.add('active');
       roomsFields.style.display = 'none';
       eventsFields.style.display = 'block';
+      const infoBox = document.getElementById('roomSelectionInfo');
+      if (infoBox) infoBox.style.display = 'none';
 
       checkin.removeAttribute('required');
       checkout.removeAttribute('required');
@@ -468,22 +656,98 @@
     const childrenInput = document.getElementById('children');
     const roomsInput = document.getElementById('roomsCount');
     
-    if (bookingType !== 'rooms' || !guestsInput || !childrenInput || !roomsInput) {
-      const priceSummaryCard = document.getElementById('priceSummaryCard');
-      if (priceSummaryCard) priceSummaryCard.style.display = 'none';
-      return;
-    }
-
-    const guestsCount = parseInt(guestsInput.value, 10) || 1;
-    const childrenCount = parseInt(childrenInput.value, 10) || 0;
-    const roomsCount = parseInt(roomsInput.value, 10) || 1;
-
     const priceSummaryCard = document.getElementById('priceSummaryCard');
     const ratePerNightSpan = document.getElementById('ratePerNight');
     const numNightsSpan = document.getElementById('numNights');
     const totalTariffSpan = document.getElementById('totalTariff');
     const priceInfoNote = document.getElementById('priceInfoNote');
     const submitBtn = document.querySelector('.form-submit-btn');
+
+    if (bookingType !== 'rooms') {
+      const hallSelect = document.getElementById('hallType');
+      if (!hallSelect) {
+        if (priceSummaryCard) priceSummaryCard.style.display = 'none';
+        return;
+      }
+      const hallName = hallSelect.value;
+      const rates = banquetRates[hallName];
+      if (!rates) {
+        if (priceSummaryCard) priceSummaryCard.style.display = 'none';
+        return;
+      }
+
+      const duration = document.getElementById('eventDuration').value;
+      
+      let basePrice = 0;
+      let noteText = '';
+      
+      if (duration === 'Hourly') {
+        const hours = parseInt(document.getElementById('eventHours').value, 10) || 1;
+        basePrice = (rates.price_per_hour || 0) * hours;
+        noteText = `Hourly rental: ₹${(rates.price_per_hour || 0).toLocaleString('en-IN')} x ${hours} hours.`;
+      } else {
+        basePrice = rates.price || 0;
+        noteText = `Full Day rental: ₹${(rates.price || 0).toLocaleString('en-IN')}.`;
+      }
+
+      const rateLabel = document.getElementById('rateLabel');
+      if (rateLabel) rateLabel.textContent = 'Base Rental';
+      
+      const nightsRow = document.getElementById('nightsRow');
+      if (nightsRow) nightsRow.style.display = 'none';
+
+      if (ratePerNightSpan) ratePerNightSpan.textContent = `₹${basePrice.toLocaleString('en-IN')}`;
+      if (totalTariffSpan) totalTariffSpan.textContent = `₹${basePrice.toLocaleString('en-IN')}`;
+      if (priceInfoNote) {
+        priceInfoNote.innerHTML = `* ${noteText}<br>* Booking is only confirmed by the hotel's confirmation message.`;
+      }
+      if (priceSummaryCard) priceSummaryCard.style.display = 'block';
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+      }
+      return;
+    }
+
+    if (!guestsInput || !childrenInput || !roomsInput) {
+      if (priceSummaryCard) priceSummaryCard.style.display = 'none';
+      return;
+    }
+
+    const rateLabel = document.getElementById('rateLabel');
+    if (rateLabel) rateLabel.textContent = 'Room Tariff (per person)';
+    
+    // Update the dynamic room display selection box below the select input
+    const roomTypeSelect = document.getElementById('roomType');
+    if (roomTypeSelect) {
+      const selectedOpt = roomTypeSelect.options[roomTypeSelect.selectedIndex];
+      if (selectedOpt) {
+        const text = selectedOpt.textContent;
+        const match = text.match(/\(From ₹([0-9,]+)\)/);
+        const startingPrice = match ? match[1] : '';
+        
+        const infoRoomName = document.getElementById('infoRoomName');
+        const infoRoomPrice = document.getElementById('infoRoomPrice');
+        const roomSelectionInfo = document.getElementById('roomSelectionInfo');
+        
+        if (infoRoomName && infoRoomPrice && roomSelectionInfo) {
+          infoRoomName.textContent = roomType;
+          if (startingPrice) {
+            infoRoomPrice.textContent = `From ₹${startingPrice}`;
+          } else {
+            infoRoomPrice.textContent = '';
+          }
+        }
+      }
+    }
+    
+    const nightsRow = document.getElementById('nightsRow');
+    if (nightsRow) nightsRow.style.display = 'flex';
+
+    const guestsCount = parseInt(guestsInput.value, 10) || 1;
+    const childrenCount = parseInt(childrenInput.value, 10) || 0;
+    const roomsCount = parseInt(roomsInput.value, 10) || 1;
 
     if (!checkinVal || !checkoutVal || !roomType) {
       priceSummaryCard.style.display = 'none';
@@ -578,7 +842,7 @@
     if (!isAvailable) {
       ratePerNightSpan.innerHTML = '<span class="price-warning">Not Available</span>';
       totalTariffSpan.innerHTML = '<span class="price-warning">Not Available</span>';
-      numNightsSpan.textContent = numNights + (numNights === 1 ? ' night' : ' nights');
+      numNightsSpan.textContent = numNights;
       priceInfoNote.innerHTML = `<span class="price-warning">${noteText}</span>`;
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -588,7 +852,7 @@
     } else {
       const totalPrice = dailyRate * numNights;
       ratePerNightSpan.textContent = `₹${dailyRate.toLocaleString('en-IN')}`;
-      numNightsSpan.textContent = `${numNights} ${numNights === 1 ? 'night' : 'nights'}`;
+      numNightsSpan.textContent = numNights;
       totalTariffSpan.textContent = `₹${totalPrice.toLocaleString('en-IN')}`;
       priceInfoNote.innerHTML = `* ${noteText}<br>* Booking is only confirmed by the hotel's confirmation message.`;
       if (submitBtn) {
@@ -623,10 +887,10 @@
       phone:      phone,
     };
 
+    const totalEl  = document.getElementById('totalTariff');
+    const estAmt   = (totalEl && totalEl.textContent && totalEl.textContent !== '—') ? parseFloat((totalEl.textContent || '').replace(/[^0-9.]/g, '')) : null;
+
     if (bookingType === 'rooms') {
-      const totalEl  = document.getElementById('totalTariff');
-      const estAmt   = totalEl ? parseFloat((totalEl.textContent || '').replace(/[^0-9.]/g, '')) : null;
-      
       // Save rooms count with quantity appended to room type if Qty > 1
       const selectedRoom = document.getElementById('roomType').value;
       const roomsCountVal = parseInt(document.getElementById('roomsCount').value, 10) || 1;
@@ -650,15 +914,20 @@
         special_requests: finalNotes,
       };
     } else {
+      const durationVal = document.getElementById('eventDuration').value;
+      const durationFinal = durationVal === 'Hourly' ? `Hourly (${document.getElementById('eventHours').value} hours)` : durationVal;
+      const finalMsg = document.getElementById('eventDetails').value.trim();
+
       payload = { ...payload,
         inquiry_type:     'booking_event',
         enquiry_category: 'Conference / Event',
         status:           'Pending',
         event_date:       document.getElementById('eventDate').value,
-        event_duration:   document.getElementById('eventDuration').value,
+        event_duration:   durationFinal,
         hall_type:        document.getElementById('hallType').value,
         attendees:        parseInt(document.getElementById('attendees').value) || 0,
-        message:          document.getElementById('eventDetails').value.trim(),
+        estimated_amount: (estAmt && !isNaN(estAmt)) ? estAmt : null,
+        message:          finalMsg,
         special_requests: document.getElementById('specialRequests').value.trim(),
       };
     }
@@ -667,27 +936,39 @@
       let finalInqNumber = '';
       try {
         const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const startOfMonth = new Date(year, now.getMonth(), 1).toISOString();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth(); // 0-11
+        let fyStartYear = currentYear;
+        if (currentMonth < 3) { // Jan, Feb, Mar
+          fyStartYear = currentYear - 1;
+        }
+        const fyStartDate = new Date(fyStartYear, 3, 1); // April 1st
+        const fyStartISO = fyStartDate.toISOString();
+
+        const typeQuery = bookingType === 'rooms' ? 'booking_room' : 'booking_event';
 
         const { count, error: countErr } = await _supabase
           .from('inquiries')
           .select('*', { count: 'exact', head: true })
-          .gte('created_at', startOfMonth);
+          .eq('inquiry_type', typeQuery)
+          .gte('created_at', fyStartISO);
 
         if (countErr) throw countErr;
 
         const nextSeq = (count || 0) + 1;
         const seqStr = String(nextSeq).padStart(4, '0');
-        const dateStr = `${year}${month}${String(now.getDate()).padStart(2, '0')}`;
-        finalInqNumber = `INQ-${dateStr}-${seqStr}`;
+        const monthStr = String(currentMonth + 1).padStart(2, '0');
+        const dateStr = `${currentYear}${monthStr}${String(now.getDate()).padStart(2, '0')}`;
+        
+        const prefix = bookingType === 'rooms' ? 'INQR' : 'INQB';
+        finalInqNumber = `${prefix}-${dateStr}-${seqStr}`;
       } catch (err) {
         console.warn('Error generating inquiry number client-side:', err);
         const now = new Date();
         const seqStr = String(Math.floor(1000 + Math.random() * 9000));
         const dateStr = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
-        finalInqNumber = `INQ-${dateStr}-${seqStr}`;
+        const prefix = bookingType === 'rooms' ? 'INQR' : 'INQB';
+        finalInqNumber = `${prefix}-${dateStr}-${seqStr}`;
       }
 
       payload.inquiry_number = finalInqNumber;
@@ -710,7 +991,7 @@
         if (inqNumEl) inqNumEl.textContent = `Inquiry #${inqNum}`;
         overlay.style.display = 'flex';
         // Countdown
-        let secs = 3;
+        let secs = 12;
         const timer = setInterval(() => {
           secs--;
           if (countdownEl) countdownEl.textContent = secs;
@@ -722,7 +1003,7 @@
       } else {
         // Fallback if overlay missing
         showToast(`✓ Request ${inqNum} received! Redirecting...`, true);
-        setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+        setTimeout(() => { window.location.href = 'index.html'; }, 12000);
       }
 
       // Reset form in background
@@ -948,6 +1229,34 @@
 
     if (checkoutInput) {
       checkoutInput.addEventListener('change', calculateEstimatedPrice);
+    }
+
+    // Add event listeners for event booking fields
+    const eventDuration = document.getElementById('eventDuration');
+    if (eventDuration) {
+      eventDuration.addEventListener('change', (e) => {
+        const hoursGroup = document.getElementById('eventHoursGroup');
+        if (hoursGroup) {
+          hoursGroup.style.display = e.target.value === 'Hourly' ? 'block' : 'none';
+        }
+        calculateEstimatedPrice();
+      });
+    }
+    const eventHours = document.getElementById('eventHours');
+    if (eventHours) {
+      eventHours.addEventListener('change', calculateEstimatedPrice);
+      eventHours.addEventListener('input', calculateEstimatedPrice);
+    }
+    const hallType = document.getElementById('hallType');
+    if (hallType) {
+      hallType.addEventListener('change', () => {
+        calculateEstimatedPrice();
+      });
+    }
+    const attendees = document.getElementById('attendees');
+    if (attendees) {
+      attendees.addEventListener('change', calculateEstimatedPrice);
+      attendees.addEventListener('input', calculateEstimatedPrice);
     }
 
     // Run once on load
