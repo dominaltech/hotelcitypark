@@ -1,4 +1,4 @@
-﻿/* ═══════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════════
    Hotel City Park — User Website Service Worker (PWA)
    Enables: Offline support · Install to Home Screen · Fast load
 ═══════════════════════════════════════════════════════════════════ */
@@ -9,9 +9,11 @@ const STATIC_ASSETS = [
   './index.html',
   './rooms.html',
   './dining.html',
+  './halls.html',
   './contact.html',
   './booking.html',
   './pricing.html',
+  './my-bookings.html',
   './style.css',
   './theme.js',
   './manifest.json',

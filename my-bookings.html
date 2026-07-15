@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Bookings & Activities — Hotel City Park, Solapur</title>
+<meta name="description" content="View and manage your room bookings, event reservations, and inquiry history with Hotel City Park, Solapur.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#9B3A6A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="City Park">
+<link rel="apple-touch-icon" href="logo.png">
+<script>
+  // Automatically set theme based on time: 7 PM (19h) to 5 AM (5h) is dark mode, otherwise light mode
+  (function() {
+    const hour = new Date().getHours();
+    const isNight = hour >= 19 || hour < 5;
+    document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+  })();
+</script>
+<style>
+  .profile-section {
+    max-width: 1200px;
+    margin: 40px auto 20px;
+    padding: 0 20px;
+  }
+  .profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 30px var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .profile-info h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin: 0 0 8px;
+    color: var(--text-primary);
+  }
+  .profile-info p {
+    font-family: 'Jost', sans-serif;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .profile-edit-btn {
+    background: var(--gold);
+    color: var(--text-inverse);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+    font-weight: 500;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .profile-edit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  
+  .tabs-nav {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  .tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(199, 163, 184, 0.1);
+  }
+  .tab-btn.active {
+    background: var(--gold);
+    color: var(--text-inverse);
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  
+  .booking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+  }
+  .empty-state h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+  
+  .record-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s;
+  }
+  .record-card:hover {
+    transform: translateY(-4px);
+  }
+  .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .record-id {
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .record-type-badge {
+    background: rgba(199, 163, 184, 0.2);
+    color: var(--text-primary);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .record-time {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .record-details {
+    font-family: 'Jost', sans-serif;
+    margin-bottom: 20px;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+  .detail-label {
+    color: var(--text-secondary);
+  }
+  .detail-val {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .record-actions {
+    display: flex;
+    gap: 12px;
+  }
+  .action-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-primary);
+    transition: all 0.2s;
+  }
+  .action-btn.edit-btn:hover {
+    background: var(--gold);
+    color: var(--text-inverse);
+    border-color: var(--gold);
+  }
+  .action-btn.delete-btn {
+    border-color: rgba(220, 53, 69, 0.4);
+    color: #dc3545;
+  }
+  .action-btn.delete-btn:hover {
+    background: #dc3545;
+    color: #fff;
+    border-color: #dc3545;
+  }
+  
+  /* Modals */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal-box {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+  }
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .modal-submit {
+    flex: 1;
+    background: var(--gold);
+    color: var(--text-inverse);
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .modal-cancel {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body class="subpage-body">
+
+<!-- NAVBAR -->
+<nav id="navbar" class="nav-subpage">
+  <a href="index.html" class="nav-logo" id="logoLink">
+    <span class="name">City Park</span>
+    <span class="tag">by JMG Hospitality & Infra · Solapur</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" id="navHome">Home</a></li>
+    <li><a href="rooms.html" id="navRooms">Rooms</a></li>
+    <li><a href="halls.html" id="navHalls">Halls</a></li>
+    <li><a href="dining.html" id="navDining">Dining</a></li>
+    <li><a href="pricing.html" id="navPricing">Pricing</a></li>
+    <li><a href="contact.html" id="navContact">Contact</a></li>
+    <li><a href="my-bookings.html" id="navMyBookings" style="color: var(--gold);">My Bookings</a></li>
+  </ul>
+  <div style="display: flex; align-items: center;">
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <a href="booking.html" class="nav-book" id="navBookBtn">Book Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mob-back" onclick="toggleMobileMenu()" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+  </button>
+  <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+  <a href="rooms.html" onclick="toggleMobileMenu()">Rooms</a>
+  <a href="halls.html" onclick="toggleMobileMenu()">Halls & Banquets</a>
+  <a href="dining.html" onclick="toggleMobileMenu()">Dining</a>
+  <a href="pricing.html" onclick="toggleMobileMenu()">Pricing</a>
+  <a href="contact.html" onclick="toggleMobileMenu()">Contact Info</a>
+  <a href="my-bookings.html" onclick="toggleMobileMenu()" style="color:var(--gold)">My Bookings</a>
+  <a href="booking.html" onclick="toggleMobileMenu();" style="color:var(--gold)">Book Now</a>
+  
+  <button id="mobileThemeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin: 24px auto 0; border: 1px solid var(--border-color); color: var(--text-primary);">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- HERO BANNER -->
+<section class="subpage-hero" style="background-image: url('https://images.unsplash.com/photo-1455587734955-081b22074882?w=1800&q=80');">
+  <div class="subpage-hero-content">
+    <p class="hero-eyebrow">Your Activity History</p>
+    <h1 class="hero-title">My Bookings & <em>Inquiries</em></h1>
+  </div>
+</section>
+
+<!-- PROFILE SECTION -->
+<div class="profile-section">
+  <div class="profile-card">
+    <div class="profile-info">
+      <h2 id="welcomeMsg">Welcome to City Park Dashboard</h2>
+      <p>Manage your bookings, conference requests, and contact history locally.</p>
+    </div>
+    <button class="profile-edit-btn" onclick="openProfileModal()">Edit Profile Name</button>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div class="dashboard-container">
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('rooms')">Room Bookings</button>
+    <button class="tab-btn" onclick="switchTab('events')">Event & Conference Bookings</button>
+    <button class="tab-btn" onclick="switchTab('contact')">Contact & Inquiry History</button>
+    <button class="profile-edit-btn" style="margin-left:auto; background:var(--text-primary); color:var(--bg-primary);" onclick="openCreateModal()">+ Create Record Manually</button>
+  </div>
+
+  <!-- TAB CONTENT: ROOMS -->
+  <div id="tab-rooms" class="tab-content active">
+    <div id="rooms-grid" class="booking-grid"></div>
+  </div>
+
+  <!-- TAB CONTENT: EVENTS -->
+  <div id="tab-events" class="tab-content">
+    <div id="events-grid" class="booking-grid"></div>
+  </div>
+
+  <!-- TAB CONTENT: CONTACT -->
+  <div id="tab-contact" class="tab-content">
+    <div id="contact-grid" class="booking-grid"></div>
+  </div>
+</div>
+
+<!-- MODAL: PROFILE -->
+<div id="profileModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 class="modal-title">Edit Profile Name</h3>
+    <div class="form-group">
+      <label for="profileNameInput">Your Name</label>
+      <input type="text" id="profileNameInput" placeholder="Enter your name">
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeProfileModal()">Cancel</button>
+      <button class="modal-submit" onclick="saveProfileName()">Save Name</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CREATE RECORD MANUALLY -->
+<div id="createModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 class="modal-title">Create Manual Record</h3>
+    <div class="form-group">
+      <label for="createType">Record Type</label>
+      <select id="createType" onchange="toggleCreateFields()">
+        <option value="rooms">Room Booking</option>
+        <option value="events">Event / Conference</option>
+        <option value="contact">Contact Request</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="createFirstName">First Name</label>
+      <input type="text" id="createFirstName" required>
+    </div>
+    <div class="form-group">
+      <label for="createLastName">Last Name</label>
+      <input type="text" id="createLastName" required>
+    </div>
+    <div class="form-group">
+      <label for="createEmail">Email Address</label>
+      <input type="email" id="createEmail" required>
+    </div>
+    <div class="form-group">
+      <label for="createPhone">Phone Number</label>
+      <input type="tel" id="createPhone" required>
+    </div>
+
+    <!-- Room fields -->
+    <div id="createRoomFields">
+      <div class="form-group">
+        <label for="createRoomType">Room Type</label>
+        <select id="createRoomType">
+          <option value="Executive Room">Executive Room</option>
+          <option value="Deluxe Room">Deluxe Room</option>
+          <option value="Suite Room">Suite Room</option>
+          <option value="Penthouse Suite">Penthouse Suite</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="createCheckIn">Check-In Date</label>
+        <input type="date" id="createCheckIn">
+      </div>
+      <div class="form-group">
+        <label for="createCheckOut">Check-Out Date</label>
+        <input type="date" id="createCheckOut">
+      </div>
+      <div class="form-group">
+        <label for="createGuests">Adults</label>
+        <input type="number" id="createGuests" min="1" value="2">
+      </div>
+    </div>
+
+    <!-- Event fields -->
+    <div id="createEventFields" style="display:none;">
+      <div class="form-group">
+        <label for="createHallType">Hall Type</label>
+        <select id="createHallType">
+          <option value="Grand Ballroom">Grand Ballroom</option>
+          <option value="Senate Meeting Room">Senate Meeting Room</option>
+          <option value="Rooftop Terraces">Rooftop Terraces</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="createEventDate">Event Date</label>
+        <input type="date" id="createEventDate">
+      </div>
+      <div class="form-group">
+        <label for="createAttendees">Attendees</label>
+        <input type="number" id="createAttendees" min="5" value="50">
+      </div>
+    </div>
+
+    <!-- General contact fields -->
+    <div id="createContactFields" style="display:none;">
+      <div class="form-group">
+        <label for="createSubject">Subject / Category</label>
+        <input type="text" id="createSubject" placeholder="General Inquiry, Dining reservation, etc.">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="createMessage">Special Requests / Message</label>
+      <textarea id="createMessage" rows="3"></textarea>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeCreateModal()">Cancel</button>
+      <button class="modal-submit" onclick="submitManualRecord()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EDIT RECORD -->
+<div id="editModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 class="modal-title">Edit Record Details</h3>
+    <input type="hidden" id="editIndex">
+    <div class="form-group">
+      <label for="editFirstName">First Name</label>
+      <input type="text" id="editFirstName" required>
+    </div>
+    <div class="form-group">
+      <label for="editLastName">Last Name</label>
+      <input type="text" id="editLastName" required>
+    </div>
+    <div class="form-group">
+      <label for="editPhone">Phone Number</label>
+      <input type="tel" id="editPhone" required>
+    </div>
+    <div class="form-group" id="editEmailGroup">
+      <label for="editEmail">Email Address</label>
+      <input type="email" id="editEmail" required>
+    </div>
+
+    <!-- Room edit fields -->
+    <div id="editRoomFields">
+      <div class="form-group">
+        <label for="editCheckIn">Check-In Date</label>
+        <input type="date" id="editCheckIn">
+      </div>
+      <div class="form-group">
+        <label for="editCheckOut">Check-Out Date</label>
+        <input type="date" id="editCheckOut">
+      </div>
+      <div class="form-group">
+        <label for="editGuests">Adults</label>
+        <input type="number" id="editGuests">
+      </div>
+    </div>
+
+    <!-- Event edit fields -->
+    <div id="editEventFields" style="display:none;">
+      <div class="form-group">
+        <label for="editEventDate">Event Date</label>
+        <input type="date" id="editEventDate">
+      </div>
+      <div class="form-group">
+        <label for="editAttendees">Attendees</label>
+        <input type="number" id="editAttendees">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="editMessage">Special Notes / Message</label>
+      <textarea id="editMessage" rows="3"></textarea>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="modal-submit" onclick="submitEditRecord()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<footer style="margin-top:80px; padding: 40px 20px; background: var(--bg-card); border-top: 1px solid var(--border-color); text-align:center;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <p style="font-family:'Cormorant Garamond', serif; font-size:1.4rem; color:var(--text-primary); margin-bottom:12px;">Hotel City Park Solapur</p>
+    <p style="font-family:'Jost', sans-serif; font-size:0.9rem; color:var(--text-secondary);">© 2026 Hotel City Park. All rights reserved locally.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile Menu toggling
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // State management
+  let activeTab = 'rooms';
+
+  // Load and render records
+  function getRecords() {
+    return JSON.parse(localStorage.getItem('my_bookings') || '[]');
+  }
+
+  function saveRecords(records) {
+    localStorage.setItem('my_bookings', JSON.stringify(records));
+    renderAll();
+  }
+
+  function switchTab(tabName) {
+    activeTab = tabName;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    
+    const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.textContent.toLowerCase().includes(tabName));
+    if (targetBtn) targetBtn.classList.add('active');
+    
+    const targetContent = document.getElementById(`tab-${tabName}`);
+    if (targetContent) targetContent.classList.add('active');
+    
+    renderAll();
+  }
+
+  function renderAll() {
+    const records = getRecords();
+    
+    // Group records by type
+    const rooms = records.filter(r => r.type === 'rooms' || r.inquiry_type === 'booking_room');
+    const events = records.filter(r => r.type === 'events' || r.inquiry_type === 'booking_event');
+    const contacts = records.filter(r => r.type === 'contact' || r.inquiry_type === 'contact');
+
+    renderGrid('rooms-grid', rooms, 'rooms');
+    renderGrid('events-grid', events, 'events');
+    renderGrid('contact-grid', contacts, 'contact');
+    
+    renderProfileWelcome();
+  }
+
+  function renderProfileWelcome() {
+    const profileName = localStorage.getItem('profile_name') || '';
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    if (profileName) {
+      welcomeMsg.textContent = `Welcome back, ${profileName}!`;
+    } else {
+      welcomeMsg.textContent = `Welcome to City Park Dashboard`;
+    }
+  }
+
+  function formatDate(isoStr) {
+    if (!isoStr) return 'N/A';
+    const d = new Date(isoStr);
+    return d.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderGrid(gridId, items, type) {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = '';
+    
+    if (items.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column: 1 / -1;">
+          <h3>No Records Found</h3>
+          <p>You haven't submitted any inquiries in this category yet.</p>
+        </div>
+      `;
+      return;
+    }
+
+    items.forEach((item, index) => {
+      // Find global index
+      const globalRecords = getRecords();
+      const globalIndex = globalRecords.findIndex(r => r.id === item.id || (r.timestamp === item.timestamp && r.email === item.email));
+      
+      let detailsHTML = '';
+      if (type === 'rooms') {
+        detailsHTML = `
+          <div class="detail-row"><span class="detail-label">Room Type:</span><span class="detail-val">${item.room_type || 'Standard'}</span></div>
+          <div class="detail-row"><span class="detail-label">Check-In:</span><span class="detail-val">${item.check_in || 'N/A'}</span></div>
+          <div class="detail-row"><span class="detail-label">Check-Out:</span><span class="detail-val">${item.check_out || 'N/A'}</span></div>
+          <div class="detail-row"><span class="detail-label">Guests:</span><span class="detail-val">${item.adults || 1} Adults</span></div>
+        `;
+      } else if (type === 'events') {
+        detailsHTML = `
+          <div class="detail-row"><span class="detail-label">Hall:</span><span class="detail-val">${item.hall_type || 'Grand Ballroom'}</span></div>
+          <div class="detail-row"><span class="detail-label">Date:</span><span class="detail-val">${item.event_date || 'N/A'}</span></div>
+          <div class="detail-row"><span class="detail-label">Duration:</span><span class="detail-val">${item.event_duration || 'Daily'}</span></div>
+          <div class="detail-row"><span class="detail-label">Attendees:</span><span class="detail-val">${item.attendees || 50} pax</span></div>
+        `;
+      } else {
+        detailsHTML = `
+          <div class="detail-row"><span class="detail-label">Category:</span><span class="detail-val">${item.enquiry_category || 'General Contact'}</span></div>
+          <div class="detail-row"><span class="detail-label">Message:</span><span class="detail-val" style="text-align: right; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.message || 'N/A'}</span></div>
+        `;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'record-card';
+      card.innerHTML = `
+        <div>
+          <div class="record-header">
+            <span class="record-id">${item.inquiry_number || item.id || 'INQ-MANUAL'}</span>
+            <span class="record-type-badge">${item.status || 'Pending'}</span>
+          </div>
+          <div class="record-time">Submitted: ${formatDate(item.timestamp)}</div>
+          <div class="record-details">
+            <div class="detail-row"><span class="detail-label">Contact:</span><span class="detail-val">${item.first_name} ${item.last_name} (${item.phone})</span></div>
+            ${detailsHTML}
+            ${item.estimated_amount ? `<div class="detail-row"><span class="detail-label">Estimated:</span><span class="detail-val" style="color:var(--gold); font-weight:600;">₹${item.estimated_amount.toLocaleString('en-IN')}</span></div>` : ''}
+          </div>
+        </div>
+        <div class="record-actions">
+          <button class="action-btn edit-btn" onclick="openEditModal(${globalIndex})">Edit</button>
+          <button class="action-btn delete-btn" onclick="deleteRecord(${globalIndex})">Delete</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Profile Modal logic
+  function openProfileModal() {
+    document.getElementById('profileNameInput').value = localStorage.getItem('profile_name') || '';
+    document.getElementById('profileModal').classList.add('open');
+  }
+  function closeProfileModal() {
+    document.getElementById('profileModal').classList.remove('open');
+  }
+  function saveProfileName() {
+    const val = document.getElementById('profileNameInput').value.trim();
+    localStorage.setItem('profile_name', val);
+    closeProfileModal();
+    renderProfileWelcome();
+  }
+
+  // Create Modal logic
+  function openCreateModal() {
+    document.getElementById('createModal').classList.add('open');
+    toggleCreateFields();
+  }
+  function closeCreateModal() {
+    document.getElementById('createModal').classList.remove('open');
+  }
+  function toggleCreateFields() {
+    const type = document.getElementById('createType').value;
+    document.getElementById('createRoomFields').style.display = type === 'rooms' ? 'block' : 'none';
+    document.getElementById('createEventFields').style.display = type === 'events' ? 'block' : 'none';
+    document.getElementById('createContactFields').style.display = type === 'contact' ? 'block' : 'none';
+  }
+  function submitManualRecord() {
+    const records = getRecords();
+    const type = document.getElementById('createType').value;
+    const fname = document.getElementById('createFirstName').value.trim();
+    const lname = document.getElementById('createLastName').value.trim();
+    const email = document.getElementById('createEmail').value.trim();
+    const phone = document.getElementById('createPhone').value.trim();
+    const msg = document.getElementById('createMessage').value.trim();
+
+    if (!fname || !email || !phone) {
+      alert('Please fill out Name, Email and Phone.');
+      return;
+    }
+
+    const payload = {
+      id: `MANUAL-${Date.now()}`,
+      inquiry_number: `MANUAL-${Date.now().toString().slice(-6)}`,
+      timestamp: new Date().toISOString(),
+      type: type,
+      status: 'Offline Log',
+      first_name: fname,
+      last_name: lname,
+      email: email,
+      phone: phone,
+      message: msg
+    };
+
+    if (type === 'rooms') {
+      payload.room_type = document.getElementById('createRoomType').value;
+      payload.check_in = document.getElementById('createCheckIn').value;
+      payload.check_out = document.getElementById('createCheckOut').value;
+      payload.adults = parseInt(document.getElementById('createGuests').value) || 2;
+    } else if (type === 'events') {
+      payload.hall_type = document.getElementById('createHallType').value;
+      payload.event_date = document.getElementById('createEventDate').value;
+      payload.attendees = parseInt(document.getElementById('createAttendees').value) || 50;
+    } else {
+      payload.enquiry_category = document.getElementById('createSubject').value || 'Manual Contact Log';
+    }
+
+    records.push(payload);
+    saveRecords(records);
+    closeCreateModal();
+  }
+
+  // Edit Modal logic
+  function openEditModal(index) {
+    const records = getRecords();
+    const item = records[index];
+    if (!item) return;
+
+    document.getElementById('editIndex').value = index;
+    document.getElementById('editFirstName').value = item.first_name || '';
+    document.getElementById('editLastName').value = item.last_name || '';
+    document.getElementById('editPhone').value = item.phone || '';
+    document.getElementById('editEmail').value = item.email || '';
+    document.getElementById('editMessage').value = item.message || item.special_requests || '';
+
+    const isRoom = item.type === 'rooms' || item.inquiry_type === 'booking_room';
+    const isEvent = item.type === 'events' || item.inquiry_type === 'booking_event';
+
+    document.getElementById('editRoomFields').style.display = isRoom ? 'block' : 'none';
+    document.getElementById('editEventFields').style.display = isEvent ? 'block' : 'none';
+
+    if (isRoom) {
+      document.getElementById('editCheckIn').value = item.check_in || '';
+      document.getElementById('editCheckOut').value = item.check_out || '';
+      document.getElementById('editGuests').value = item.adults || 1;
+    } else if (isEvent) {
+      document.getElementById('editEventDate').value = item.event_date || '';
+      document.getElementById('editAttendees').value = item.attendees || 50;
+    }
+
+    document.getElementById('editModal').classList.add('open');
+  }
+  
+  function closeEditModal() {
+    document.getElementById('editModal').classList.remove('open');
+  }
+
+  function submitEditRecord() {
+    const index = parseInt(document.getElementById('editIndex').value);
+    const records = getRecords();
+    const item = records[index];
+    if (!item) return;
+
+    item.first_name = document.getElementById('editFirstName').value.trim();
+    item.last_name = document.getElementById('editLastName').value.trim();
+    item.phone = document.getElementById('editPhone').value.trim();
+    item.email = document.getElementById('editEmail').value.trim();
+    
+    const isRoom = item.type === 'rooms' || item.inquiry_type === 'booking_room';
+    const isEvent = item.type === 'events' || item.inquiry_type === 'booking_event';
+
+    if (isRoom) {
+      item.check_in = document.getElementById('editCheckIn').value;
+      item.check_out = document.getElementById('editCheckOut').value;
+      item.adults = parseInt(document.getElementById('editGuests').value) || 1;
+      item.special_requests = document.getElementById('editMessage').value.trim();
+    } else if (isEvent) {
+      item.event_date = document.getElementById('editEventDate').value;
+      item.attendees = parseInt(document.getElementById('editAttendees').value) || 50;
+      item.message = document.getElementById('editMessage').value.trim();
+    } else {
+      item.message = document.getElementById('editMessage').value.trim();
+    }
+
+    records[index] = item;
+    saveRecords(records);
+    closeEditModal();
+  }
+
+  function deleteRecord(index) {
+    if (confirm('Are you sure you want to remove this record from your local history?')) {
+      const records = getRecords();
+      records.splice(index, 1);
+      saveRecords(records);
+    }
+  }
+
+  // Initial render
+  renderAll();
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

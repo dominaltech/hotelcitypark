@@ -20,16 +20,11 @@
   );
 </script>
 <script>
-  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  // Automatically set theme based on time: 7 PM (19h) to 5 AM (5h) is dark mode, otherwise light mode
   (function() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      const hour = new Date().getHours();
-      const isNight = hour >= 19 || hour < 5;
-      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
-    }
+    const hour = new Date().getHours();
+    const isNight = hour >= 19 || hour < 5;
+    document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
   })();
 </script>
 </head>
@@ -48,6 +43,7 @@
     <li><a href="dining.html" id="navDining">Dining</a></li>
     <li><a href="pricing.html" id="navPricing">Pricing</a></li>
     <li><a href="contact.html" id="navContact" style="color: var(--gold);">Contact</a></li>
+    <li><a href="my-bookings.html" id="navMyBookings">My Bookings</a></li>
   </ul>
   <div style="display: flex; align-items: center;">
     <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
@@ -87,6 +83,7 @@
   <a href="dining.html" onclick="toggleMobileMenu()">Dining</a>
 
   <a href="contact.html" onclick="toggleMobileMenu()">Contact Info</a>
+    <a href="my-bookings.html" onclick="toggleMobileMenu()">My Bookings</a>
   <a href="booking.html" onclick="toggleMobileMenu();" style="color:var(--gold)">Book Now</a>
   
   <button id="mobileThemeToggle" class="theme-toggle-btn" aria-label="Toggle Theme" style="margin: 24px auto 0; border: 1px solid var(--border-color); color: var(--text-primary);">
@@ -339,6 +336,26 @@
         .single();
 
       if (error) throw error;
+
+      // Save contact request to local storage activity history
+      try {
+        const localList = JSON.parse(localStorage.getItem('my_bookings') || '[]');
+        localList.push({
+          id: data.inquiry_number || `CNTC-${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          type: 'contact',
+          first_name: fname,
+          last_name: lname,
+          email: email,
+          phone: phone,
+          enquiry_category: enquiry,
+          message: msg,
+          status: 'Sent'
+        });
+        localStorage.setItem('my_bookings', JSON.stringify(localList));
+      } catch (e) {
+        console.error('Failed to save contact inquiry locally:', e);
+      }
 
       showToast(`✓ Inquiry ${data.inquiry_number} received! We\'ll contact you shortly.`, true);
 

@@ -20,16 +20,11 @@
   );
 </script>
 <script>
-  // Immediately set theme from localStorage (manual preference) or auto-detect based on time (7 PM to 5 AM dark mode)
+  // Automatically set theme based on time: 7 PM (19h) to 5 AM (5h) is dark mode, otherwise light mode
   (function() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      const hour = new Date().getHours();
-      const isNight = hour >= 19 || hour < 5;
-      document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
-    }
+    const hour = new Date().getHours();
+    const isNight = hour >= 19 || hour < 5;
+    document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
   })();
 </script>
 </head>
@@ -982,6 +977,20 @@
       if (error) throw error;
 
       const inqNum = data.inquiry_number || payload.inquiry_number;
+
+      // Save to localStorage activity log
+      try {
+        const localList = JSON.parse(localStorage.getItem('my_bookings') || '[]');
+        localList.push({
+          id: inqNum,
+          timestamp: new Date().toISOString(),
+          type: bookingType, // 'rooms' or 'events'
+          ...payload
+        });
+        localStorage.setItem('my_bookings', JSON.stringify(localList));
+      } catch (e) {
+        console.error('Failed to save booking locally:', e);
+      }
 
       // Show full-screen success overlay (impossible to miss!)
       const overlay = document.getElementById('successOverlay');
